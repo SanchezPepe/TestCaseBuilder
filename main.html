@@ -2,102 +2,80 @@
 <html lang="en">
 
 <head>
-    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.2/css/bulma.min.css">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test Case Builder</title>
-    <style>
-        html,
-        body {
-            margin: 0;
-            height: 100%;
-        }
+   <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.2/css/bulma.min.css">
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Test Case Builder</title>
+   <style>
+      html,
+      body, #app {
+         margin: 0;
+         height: 100%;
+      }
 
-        .grid-container {
-            height: 95%;
-            display: grid;
-            grid-template-columns: 25% 25% 50%;
-            grid-template-rows: repeat(1, auto);
-            background-color: #2196F3;
-        }
+      .grid-container {
+         height: 95%;
+         display: grid;
+         grid-template-columns: 25% 25% 50%;
+         grid-template-rows: repeat(1, auto);
+         background-color: #2196F3;
+      }
 
-        .grid-item {
-            background-color: rgba(255, 255, 255, 0.8);
-            border: 1px solid rgba(0, 0, 0, 0.8);
-            font-size: 20px;
-            text-align: center;
-            grid-row-start: span 1;
-        }
+      .grid-item {
+         background-color: rgba(255, 255, 255, 0.8);
+         border: 1px solid rgba(0, 0, 0, 0.8);
+         font-size: 20px;
+         text-align: center;
+         grid-row-start: span 1;
+      }
 
-        .doneCases {
-            grid-column-start: 3;
-            grid-column-end: 5;
-        }
+      .doneCases {
+         grid-column-start: 3;
+         grid-column-end: 5;
+      }
 
-        .case {
-            margin: 2%;
-        }
-    </style>
+      .case {
+         margin: 4%;
+      }
+
+   </style>
 </head>
 
 <body>
-    <div style="height: 5%; display: flex; justify-content:space-between;">
-        <div class="subtitle">
-            Test Case Builder
-        </div>
-
-        <div class="buttons">
-            <a class="button is-link">
-                <strong>Import</strong>
-            </a>
-            <a class="button is-link">
-                <strong>Save cases</strong>
-            </a>
-        </div>
-    </div>
-    <div class="grid-container">
-        <div class="grid-item cases">
+   <div id="app">
+      <navbar></navbar>
+      <div class="grid-container">
+         <div class="grid-item cases">
             <h1 class="subtitle">Generic</h1>
-            <div class="case box">
-                <strong>Data</strong>
-                <textarea class="textarea is-medium" rows="2"></textarea>
-                <strong class="">Preconditions</strong>
-                <textarea class="textarea is-medium"></textarea>
-                <strong class="">Steps</strong>
-                <textarea class="textarea is-medium"></textarea>
-                <strong class="">Results</strong>
-                <textarea class="textarea is-medium"></textarea>
-            </div>
+            <Case></Case>
             <div class="buttons">
-                <a class="button is-link">
-                    <strong>Import</strong>
-                </a>
-                <a class="button is-link">
-                    <strong>Save cases</strong>
-                </a>
+               <a class="button is-link">
+                  <strong>Import</strong>
+               </a>
+               <a class="button is-link">
+                  <strong>Save cases</strong>
+               </a>
             </div>
-        </div>
-        <div class="grid-item cases">New</div>
-        <div class="grid-item cases doneCases">
+         </div>
+         <div class="grid-item cases">
+            <h1 class="subtitle">New</h1>
+            <Case></Case>
+         </div>
+         <div class="grid-item cases doneCases">
             Cases
             <div>
-                <div class="mySlides" style="border: black solid;">AAAAA</div>
-                <div class="mySlides" style="border: black solid;">BBBBB</div>
-                <div class="mySlides" style="border: black solid;">CCCCC</div>
-                <div class="mySlides" style="border: black solid;">DDDDD</div>
+            <Case class="mySlides"></Case>
+            <Case class="mySlides"></Case>
+            <Case class="mySlides"></Case>
+            <Case class="mySlides"></Case>
 
-                <button class="button" onclick="plusDivs(-1)">&#10094;</button>
-                <button class="button" onclick="plusDivs(1)">&#10095;</button>
+               <button class="button" onclick="plusDivs(-1)">&#10094;</button>
+               <button class="button" onclick="plusDivs(1)">&#10095;</button>
             </div>
-        </div>
-    </div>
-    </div>
-    <div id="app">
-
-
-    </div>
+         </div>
+      </div>
+   </div>
+   <script src="index.js"></script>
 </body>
-<script src="index.js"></script>
-
 </html>
