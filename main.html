@@ -19,7 +19,7 @@
       .grid-container {
          height: 95%;
          display: grid;
-         grid-template-columns: 25% 25% 50%;
+         grid-template-columns: 33% 33% 34%;
          grid-template-rows: repeat(1, auto);
          background-color: #2196F3;
       }
@@ -32,17 +32,17 @@
          grid-row-start: span 1;
       }
 
-      .doneCases {
-         grid-column-start: 3;
-         grid-column-end: 5;
-      }
-
       .case {
          margin: 4%;
       }
 
-      .cases {
+      .grid-item {
          overflow: auto;
+      }
+
+      .doneCase{
+         background-color: rgb(39, 105, 74);
+         color: white;
       }
 
       /** Overflow scroll bar**/
@@ -65,8 +65,6 @@
       ::-webkit-scrollbar-thumb:hover {
          background: #555;
       }
-
-      |
    </style>
 </head>
 
@@ -74,27 +72,23 @@
    <div id="app">
       <navbar></navbar>
       <div class="grid-container">
-         <div class="grid-item cases">
+         <div class="grid-item">
             <h1 class="subtitle">Generic</h1>
             <Case></Case>
          </div>
 
-         <div class="grid-item cases">
+         <div class="grid-item">
             <h1 class="subtitle">New</h1>
             <Case></Case>
          </div>
-         <div class="grid-item cases doneCases">
-            Cases
-            <div>
-               <Case class="mySlides"></Case>
-               <Case class="mySlides"></Case>
-               <Case class="mySlides"></Case>
-               <Case class="mySlides"></Case>
 
-               <button class="button" onclick="plusDivs(-1)">&#10094;</button>
-               <button class="button" onclick="plusDivs(1)">&#10095;</button>
+         <div class="grid-item">
+            <strong class="subtitle">Documented cases</strong>
+            <div class="box doneCase case">
+                  Primar lorem ipsum dolor sit amet
             </div>
          </div>
+
       </div>
    </div>
    <script src="index.js"></script>
