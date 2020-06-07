@@ -4,12 +4,14 @@
 <head>
    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.2/css/bulma.min.css">
+   <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>Test Case Builder</title>
    <style>
       html,
-      body, #app {
+      body,
+      #app {
          margin: 0;
          height: 100%;
       }
@@ -39,6 +41,32 @@
          margin: 4%;
       }
 
+      .cases {
+         overflow: auto;
+      }
+
+      /** Overflow scroll bar**/
+      /* width */
+      ::-webkit-scrollbar {
+         width: 7px;
+      }
+
+      /* Track */
+      ::-webkit-scrollbar-track {
+         background: #f1f1f1;
+      }
+
+      /* Handle */
+      ::-webkit-scrollbar-thumb {
+         background: #888;
+      }
+
+      /* Handle on hover */
+      ::-webkit-scrollbar-thumb:hover {
+         background: #555;
+      }
+
+      |
    </style>
 </head>
 
@@ -49,15 +77,8 @@
          <div class="grid-item cases">
             <h1 class="subtitle">Generic</h1>
             <Case></Case>
-            <div class="buttons">
-               <a class="button is-link">
-                  <strong>Import</strong>
-               </a>
-               <a class="button is-link">
-                  <strong>Save cases</strong>
-               </a>
-            </div>
          </div>
+
          <div class="grid-item cases">
             <h1 class="subtitle">New</h1>
             <Case></Case>
@@ -65,10 +86,10 @@
          <div class="grid-item cases doneCases">
             Cases
             <div>
-            <Case class="mySlides"></Case>
-            <Case class="mySlides"></Case>
-            <Case class="mySlides"></Case>
-            <Case class="mySlides"></Case>
+               <Case class="mySlides"></Case>
+               <Case class="mySlides"></Case>
+               <Case class="mySlides"></Case>
+               <Case class="mySlides"></Case>
 
                <button class="button" onclick="plusDivs(-1)">&#10094;</button>
                <button class="button" onclick="plusDivs(1)">&#10095;</button>
@@ -78,4 +99,5 @@
    </div>
    <script src="index.js"></script>
 </body>
+
 </html>
