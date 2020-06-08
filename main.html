@@ -33,7 +33,7 @@
       }
 
       .case {
-         margin: 4%;
+         margin: 0% 4% 4% 4%;
       }
 
       .grid-item {
@@ -43,6 +43,15 @@
       .doneCase{
          background-color: rgb(39, 105, 74);
          color: white;
+      }
+
+      .deleteMarginPadding {
+         padding: 0%;
+         margin: 0% !important;
+      }
+
+      .title{
+         margin: 2% 4% 0 4%;
       }
 
       /** Overflow scroll bar**/
@@ -73,18 +82,25 @@
       <navbar></navbar>
       <div class="grid-container">
          <div class="grid-item">
-            <h1 class="subtitle">Generic</h1>
+            <h1 class="subtitle title">Generic</h1>
             <Case></Case>
          </div>
 
          <div class="grid-item">
-            <h1 class="subtitle">New</h1>
+            <div class="columns title">
+               <h1 class="column subtitle deleteMarginPadding">New case</h1>
+               <div class="column buttons deleteMarginPadding">
+                  <button class="button is-small is-success">Add</button>
+                  <button class="button is-small is-danger">Delete</button>
+               </div>
+            </div>
+
             <Case></Case>
          </div>
 
          <div class="grid-item">
-            <strong class="subtitle">Documented cases</strong>
-            <div class="box doneCase case">
+            <h1 class="subtitle title">Documented</h1>
+            <div class="box doneCase case" draggable="true" ondragstart="drag(event)">
                   Primar lorem ipsum dolor sit amet
             </div>
          </div>
