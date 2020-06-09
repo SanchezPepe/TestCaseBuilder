@@ -100,19 +100,9 @@ var navbar = {
    },
    template: `
    <div style="height: 5%; display: flex; justify-content:space-between;">
-      <div class="form subtitle" style="margin: 0.5% 0.5%;">
-         <div class="columns field is-horizontal is-vcentered">
-            <div class="column field-label is-mediumn has-text-left">
-               <label class="label">Test Case: </label>
-            </div>
-            <div class="column field-body has-text-left">
-               <div class="field">
-                  <div class="control">
-                     <input v-model="title" class="input is-small" type="text" placeholder="Test name">
-                  </div>
-               </div>
-            </div>
-         </div>
+      <div class="form subtitle" style="margin: 0.5% 0.5%; display:flex; vertical-align: middle;   ">
+         <label class="label" style="white-space: nowrap; margin: 2% 6% 2% 2%">Testing: </label>
+         <input v-model="title" class="input is-small" type="text" placeholder="Test name">
       </div>
       <div class="columns is-vcentered">
          <div>
