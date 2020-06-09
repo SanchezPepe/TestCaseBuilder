@@ -92,11 +92,13 @@ var cases = {
 var navbar = {
    data() {
       return {
-         title: ''
+		title: '',
+		fileName: '',
+		file: ''
       }
    },
    methods: {
-      save() {
+    save() {
          var content = JSON.stringify(this.$root.$data.cases);
          var fileName = this.title + '_TestCases.json';
          var contentType = 'text/plain';
@@ -105,7 +107,22 @@ var navbar = {
          a.href = URL.createObjectURL(file);
          a.download = fileName;
          a.click();
-     }
+     },
+    fileUpload(event) {
+		this.fileName = event.target.files[0].name;
+        if (event.target.files.length > 0 && this.	fileName.includes('json')) {
+			this.file = event.target.files[0];
+			var reader = new FileReader();
+			reader.onload = this.onReaderLoad;
+			reader.readAsText(event.target.files[0]);
+		} else {
+			alert("Error when loading the file, verify that it is JSON type");
+		}
+	},
+	onReaderLoad(event){
+		var obj = JSON.parse(event.target.result);
+		this.$root.$data.cases = obj; 
+	}
    },
    template: `
    <div style="height: 5%; display: flex; justify-content:space-between;">
@@ -119,9 +136,9 @@ var navbar = {
                <strong>Export JSON</strong>
             </button>
          </div>
-         <div id="file-js" class=" column file is-small has-name">
+         <div id="file-js" class=" column file is-small has-name is-right is-link">
             <label class="file-label">
-               <input class="file-input" type="file" name="resume">
+               <input class="file-input" type="file" name="resume" @change="fileUpload">
                <span class="file-cta">
                   <span class="file-icon">
                      <i class="fas fa-upload"></i>
@@ -130,9 +147,7 @@ var navbar = {
                      Cargar archivo
                   </span>
                </span>
-               <span class="file-name">
-                  N/A
-               </span>
+			   <span class="file-name"> {{ fileName }} </span>
             </label>
          </div>
       </div>
