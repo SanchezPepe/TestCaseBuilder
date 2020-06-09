@@ -94,10 +94,22 @@ var navbar = {
       return {
 		title: '',
 		fileName: '',
-		file: ''
+		file: '',
+		active: false,
+		url: '',
+		folder: '',
+		webpage: false
       }
    },
+   computed: {
+	   webframe() {
+		return '<object type="text/html" v-if="webpage" data="'+ this.url + '" width="100%" height="100%" style="overflow:auto; border:5px black"></object>';	
+	   }
+   },
    methods: {
+	modal() {
+		this.active = !this.active;
+	},
     save() {
          var content = JSON.stringify(this.$root.$data.cases);
          var fileName = this.title + '_TestCases.json';
@@ -122,6 +134,13 @@ var navbar = {
 	onReaderLoad(event){
 		var obj = JSON.parse(event.target.result);
 		this.$root.$data.cases = obj; 
+	},
+	createCases(){
+		if(this.folder !== ''){
+
+		} else{
+			alert("Select a folder to create the Test Cases")
+		}
 	}
    },
    template: `
@@ -130,27 +149,52 @@ var navbar = {
          <label class="label" style="white-space: nowrap; margin: 2% 6% 2% 2%">Testing: </label>
          <input v-model="title" class="input is-small" type="text" placeholder="Test name">
       </div>
-      <div class="columns is-vcentered">
-         <div>
+	  <div class="columns is-vcentered" style="margin: 1%">
+		<div class="column">
+			<a class="button is-small is-link" @click="modal()">
+				<strong>Create Test Cases</strong>
+			</a>	
+		</div>
+        <div class="column">
             <button class="button is-small is-link" @click="save()">
                <strong>Export JSON</strong>
             </button>
          </div>
-         <div id="file-js" class=" column file is-small has-name is-right is-link">
+         <div id="file-js" class="column file is-small has-name is-right is-link">
             <label class="file-label">
                <input class="file-input" type="file" name="resume" @change="fileUpload">
                <span class="file-cta">
                   <span class="file-icon">
                      <i class="fas fa-upload"></i>
                   </span>
-                  <span class="file-label">
-                     Cargar archivo
+				  <span class="file-label">
+					<strong style="color: white">Load file</strong>
                   </span>
                </span>
 			   <span class="file-name"> {{ fileName }} </span>
             </label>
          </div>
-      </div>
+	  </div>
+	  <div class="modal" v-bind:class="{ 'is-active' : this.active }">
+			<div class="modal-background"></div>
+			<div class="columns" style="width: 90%;">
+				<div class="column">
+ 						<input class="input" v-model="url" placeholder="URL to visit">							
+				</div>
+				<div class="column">
+ 						<input class="input" v-model="folder" placeholder="Folder to create cases">							
+				</div>
+				<div class="column is-one-fifth">
+					<a class="button is-link" @click="createCases()">Create Cases</a>
+				</div>
+			</div>
+			<div class="modal-content" style="width: 90%; height: 86%;">
+				<div v-html="webframe" style="height: 100%;">
+  
+				</div>
+			</div>
+			<button class="modal-close is-large" aria-label="close" @click="modal()"></button>
+		</div>
    </div>
    `
 }
@@ -178,7 +222,7 @@ var card = {
    },
    template: 
    `
-   <a >
+   <div>
       <div class="notification is-primary doneCase case" v-on:remove="cases.splice(index, 1)" @click="toggleModal()">
          {{ title }}
          <button class="delete" v-on:click="$emit(\'remove\')"></button>
@@ -190,7 +234,7 @@ var card = {
          </div>
          <button class="modal-close is-large" aria-label="close" @click="toggleModal()"></button>
       </div>
-   </a>
+   </div>
    `
 }
 
@@ -205,7 +249,7 @@ new Vue({
    components: {
       'Case': cases,
       'Navbar': navbar,
-      'Card': card,
+	  'Card': card
    }
 })
 
@@ -218,3 +262,8 @@ function dragstart_handler(ev) {
 function dragover_handler(ev) {
    ev.preventDefault();
 }
+
+/**
+ * 
+ * 
+ */
