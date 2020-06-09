@@ -88,11 +88,10 @@
 
          <div class="grid-item">
             <h1 class="subtitle title">Documented</h1>
-            <div class="box doneCase case" v-for="c in cases">
-            {{ c.title }}
-            </div>
+            <Card v-for="(c, index) in cases" v-bind:key="c.id" v-bind:title="c.title"
+               v-on:remove="cases.splice(index, 1)">
+            </Card>
          </div>
-
       </div>
    </div>
    <script src="index.js"></script>

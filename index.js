@@ -1,4 +1,4 @@
-var Cases = {
+var cases = {
    data() {
       return {
          title: '',
@@ -20,7 +20,7 @@ var Cases = {
          this.results = ''
       },
       submit() {
-         if(this.title === ''){
+         if(this.title !== ''){
             let cases = this.$root.$data.cases.length;
             let newCase = {
                id: cases + 1,
@@ -31,13 +31,12 @@ var Cases = {
                results: this.results
             }
             this.$root.$data.cases.push(newCase);
-            //this.clear();
+            this.clear();
          }
       }
    },
-   template: `,
+   template: `
       <div class="case has-text-left">
-      
          <div class="field box has-text-centered">
             <div class="columns is-vcentered">
                <div class="column">
@@ -82,18 +81,44 @@ var Cases = {
 }
 
 var navbar = {
+   data() {
+      return {
+         title: ''
+      }
+   },
+   methods: {
+      save() {
+         var content = JSON.stringify(this.$root.$data.cases);
+         var fileName = this.title + '_TestCases.json';
+         var contentType = 'text/plain';
+         var a = document.createElement("a");
+         var file = new Blob([content], {type: contentType});
+         a.href = URL.createObjectURL(file);
+         a.download = fileName;
+         a.click();
+     }
+   },
    template: `
    <div style="height: 5%; display: flex; justify-content:space-between;">
-      <div class="subtitle" style="margin: 0.5% 0.5% ">
-         <strong>
-            Test Case Builder
-         </strong>
+      <div class="form subtitle" style="margin: 0.5% 0.5%;">
+         <div class="columns field is-horizontal is-vcentered">
+            <div class="column field-label is-mediumn has-text-left">
+               <label class="label">Test Case: </label>
+            </div>
+            <div class="column field-body has-text-left">
+               <div class="field">
+                  <div class="control">
+                     <input v-model="title" class="input is-small" type="text" placeholder="Test name">
+                  </div>
+               </div>
+            </div>
+         </div>
       </div>
       <div class="columns is-vcentered">
          <div>
-            <a class="button is-small is-link">
-               <strong>Save</strong>
-            </a>
+            <button class="button is-small is-link" @click="save()">
+               <strong>Export JSON</strong>
+            </button>
          </div>
          <div id="file-js" class=" column file is-small has-name">
             <label class="file-label">
@@ -116,6 +141,23 @@ var navbar = {
    `
 }
 
+var card = {
+   props:{
+      title: String,
+      extraData: String,
+      preconditons: String,
+      steps: String,
+      results: String   
+   },
+   template: 
+   `
+   <div class="notification is-primary doneCase case" v-on:remove="cases.splice(index, 1)">
+      {{ title }}
+      <button class="delete" v-on:click="$emit(\'remove\')"></button>
+   </div>
+   `
+}
+
 
 new Vue({
    el: '#app',
@@ -125,8 +167,9 @@ new Vue({
       }
    },
    components: {
-      'Case': Cases,
-      'Navbar': navbar
+      'Case': cases,
+      'Navbar': navbar,
+      'Card': card,
    }
 })
 
@@ -138,13 +181,4 @@ function dragstart_handler(ev) {
 
 function dragover_handler(ev) {
    ev.preventDefault();
-}
-
-function drop_handler(ev) {
-   ev.preventDefault();
-   // Get the data, which is the id of the drop target
-   var data = ev.dataTransfer.getData("text");
-   ev.target.value = data;
-   // Clear the drag data cache (for all formats/types)
-   ev.dataTransfer.clearData();
 }
