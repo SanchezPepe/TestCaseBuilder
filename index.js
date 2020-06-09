@@ -9,7 +9,8 @@ var cases = {
       }
    },
    props: {
-      buttons: false
+      buttons: false,
+      editButtons: false
    },
    methods: {
       clear() {
@@ -76,6 +77,14 @@ var cases = {
                <textarea class="textarea" rows="2" v-model="results" ondragstart="dragstart_handler(event);" draggable="true"></textarea>
             </div>
          </div>
+
+         <div class="field box" v-if="editButtons">
+            <div class="control buttons">
+               <button class="button is-success">Save</button>
+               <button class="button is-danger">Cancel</button>
+            </div>
+         </div>
+
       <div>
    `
 }
@@ -132,6 +141,11 @@ var navbar = {
 }
 
 var card = {
+   data() {
+      return {
+         activeModal: false,
+      }
+   },
    props:{
       title: String,
       extraData: String,
@@ -139,12 +153,29 @@ var card = {
       steps: String,
       results: String   
    },
+   methods: {
+      toggleModal() {
+         this.activeModal = !this.activeModal;
+      }
+   },
+   components: {
+      'Case': cases
+   },
    template: 
    `
-   <div class="notification is-primary doneCase case" v-on:remove="cases.splice(index, 1)">
-      {{ title }}
-      <button class="delete" v-on:click="$emit(\'remove\')"></button>
-   </div>
+   <a >
+      <div class="notification is-primary doneCase case" v-on:remove="cases.splice(index, 1)" @click="toggleModal()">
+         {{ title }}
+         <button class="delete" v-on:click="$emit(\'remove\')"></button>
+      </div>
+      <div class="modal" v-bind:class="{ 'is-active' : this.activeModal }">
+         <div class="modal-background"></div>
+         <div class="modal-content">
+            <Case editButtons="true"></Case>
+         </div>
+         <button class="modal-close is-large" aria-label="close" @click="toggleModal()"></button>
+      </div>
+   </a>
    `
 }
 
