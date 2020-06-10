@@ -103,7 +103,8 @@ var navbar = {
    },
    computed: {
 	   webframe() {
-		return '<object type="text/html" v-if="webpage" data="'+ this.url + '" width="100%" height="100%" style="overflow:auto; border:5px black"></object>';	
+		return '<iframe id="myFrame" src="'+ this.url + '" style="border: 2px solid blue; overflow:auto;" width="100%" height="100%"></iframe>';
+		//return '<object type="text/html" v-if="webpage" data="'+ this.url + '" width="100%" height="100%" style=" border:5px black"></object>';	
 	   }
    },
    methods: {
@@ -137,6 +138,21 @@ var navbar = {
 	},
 	createCases(){
 		if(this.folder !== ''){
+			var x = document.getElementById("section_id");
+			var y = x.getElementsByTagName("option");
+			let i = 0;
+			let folderValue = -1;
+			do {
+				if(y[i].innerText.includes(this.folder)){
+					folderValue = y[i].value;
+				}
+				i++;
+			} while (i < y.length || folderValue !== '');
+			if(folderValue !== -1){
+				x.value = folderValue;
+			} else {
+				alert("Folder not found");
+			}
 
 		} else{
 			alert("Select a folder to create the Test Cases")
