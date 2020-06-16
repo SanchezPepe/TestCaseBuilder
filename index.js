@@ -10,18 +10,18 @@ var cases = {
    },
    props: {
       buttons: false,
-      editButtons: false
+      id: 0
    },
    methods: {
       clear() {
          this.title = '',
-         this.extraData = '',
-         this.preconditons = '',
-         this.steps = '',
-         this.results = ''
+            this.extraData = '',
+            this.preconditons = '',
+            this.steps = '',
+            this.results = ''
       },
       submit() {
-         if(this.title !== ''){
+         if (this.title !== '') {
             let cases = this.$root.$data.cases.length;
             let newCase = {
                id: cases + 1,
@@ -44,8 +44,8 @@ var cases = {
                   <input class="input" placeholder="Test case title" v-model="title" ondragstart="dragstart_handler(event);" draggable="true"></input>
                </div>
                <div class="column is-one-quarter" v-if='buttons'>
-                  <button class="button is-small is-success is-rounded" @click="submit()">✔</button>
-                  <button class="button is-small is-danger is-rounded" @click="clear()">❌</button>
+                  <button class="button is-small is-success" @click="submit()">✔️</button>
+                  <button class="button is-small is-danger " @click="clear()">❌</button>
                </div>
             </div>
          </div>
@@ -78,13 +78,6 @@ var cases = {
             </div>
          </div>
 
-         <div class="field box" v-if="editButtons">
-            <div class="control buttons">
-               <button class="button is-success">Save</button>
-               <button class="button is-danger">Cancel</button>
-            </div>
-         </div>
-
       <div>
    `
 }
@@ -92,72 +85,80 @@ var cases = {
 var navbar = {
    data() {
       return {
-		title: '',
-		fileName: '',
-		file: '',
-		active: false,
-		url: '',
-		folder: '',
-		webpage: false
+         title: '',
+         fileName: '',
+         file: '',
+         active: false,
+         url: '',
+         folder: '',
+         webpage: false
       }
    },
    computed: {
-	   webframe() {
-		return '<iframe id="myFrame" src="'+ this.url + '" style="border: 2px solid blue; overflow:auto;" width="100%" height="100%"></iframe>';
-		//return '<object type="text/html" v-if="webpage" data="'+ this.url + '" width="100%" height="100%" style=" border:5px black"></object>';	
-	   }
+      webframe() {
+         return '<iframe id="myFrame" src="' + this.url + '" style="border: 2px solid blue; overflow:auto;" width="100%" height="100%"></iframe>';
+         //return '<object type="text/html" v-if="webpage" data="'+ this.url + '" width="100%" height="100%" style=" border:5px black"></object>';	
+      }
    },
    methods: {
-	modal() {
-		this.active = !this.active;
-	},
-    save() {
-         var content = JSON.stringify(this.$root.$data.cases);
-         var fileName = this.title + '_TestCases.json';
-         var contentType = 'text/plain';
-         var a = document.createElement("a");
-         var file = new Blob([content], {type: contentType});
-         a.href = URL.createObjectURL(file);
-         a.download = fileName;
-         a.click();
-     },
-    fileUpload(event) {
-		this.fileName = event.target.files[0].name;
-        if (event.target.files.length > 0 && this.	fileName.includes('json')) {
-			this.file = event.target.files[0];
-			var reader = new FileReader();
-			reader.onload = this.onReaderLoad;
-			reader.readAsText(event.target.files[0]);
-		} else {
-			alert("Error when loading the file, verify that it is JSON type");
-		}
-	},
-	onReaderLoad(event){
-		var obj = JSON.parse(event.target.result);
-		this.$root.$data.cases = obj; 
-	},
-	createCases(){
-		if(this.folder !== ''){
-			var x = document.getElementById("section_id");
-			var y = x.getElementsByTagName("option");
-			let i = 0;
-			let folderValue = -1;
-			do {
-				if(y[i].innerText.includes(this.folder)){
-					folderValue = y[i].value;
-				}
-				i++;
-			} while (i < y.length || folderValue !== '');
-			if(folderValue !== -1){
-				x.value = folderValue;
-			} else {
-				alert("Folder not found");
-			}
+      modal() {
+         this.active = !this.active;
+      },
+      exportCases() {
+         if (this.title === ''){
+            alert("Add the test title")
+         } else if (this.$root.$data.cases.length !== 0) {
+            var content = JSON.stringify(this.$root.$data.cases);
+            var fileName = this.title + '_TestCases.json';
+            var contentType = 'text/plain';
+            var a = document.createElement("a");
+            var file = new Blob([content], {
+               type: contentType
+            });
+            a.href = URL.createObjectURL(file);
+            a.download = fileName;
+            a.click();
+         } else {
+            alert("No cases")
+         }
+      },
+      fileUpload(event) {
+         this.fileName = event.target.files[0].name;
+         if (event.target.files.length > 0 && this.fileName.includes('json')) {
+            this.file = event.target.files[0];
+            var reader = new FileReader();
+            reader.onload = this.onReaderLoad;
+            reader.readAsText(event.target.files[0]);
+         } else {
+            alert("Error when loading the file, verify that it is JSON type");
+         }
+      },
+      onReaderLoad(event) {
+         var obj = JSON.parse(event.target.result);
+         this.$root.$data.cases = obj;
+      },
+      createCases() {
+         if (this.folder !== '') {
+            var x = document.getElementById("section_id");
+            var y = x.getElementsByTagName("option");
+            let i = 0;
+            let folderValue = -1;
+            do {
+               if (y[i].innerText.includes(this.folder)) {
+                  folderValue = y[i].value;
+               }
+               i++;
+            } while (i < y.length || folderValue !== '');
+            if (folderValue !== -1) {
+               x.value = folderValue;
+            } else {
+               alert("Folder not found");
+            }
 
-		} else{
-			alert("Select a folder to create the Test Cases")
-		}
-	}
+         } else {
+            alert("Select a folder to create the Test Cases")
+         }
+      }
    },
    template: `
    <div style="height: 5%; display: flex; justify-content:space-between;">
@@ -172,7 +173,7 @@ var navbar = {
 			</a>	
 		</div>
         <div class="column">
-            <button class="button is-small is-link" @click="save()">
+            <button class="button is-small is-link" @click="exportCases()">
                <strong>Export JSON</strong>
             </button>
          </div>
@@ -206,7 +207,6 @@ var navbar = {
 			</div>
 			<div class="modal-content" style="width: 90%; height: 86%;">
 				<div v-html="webframe" style="height: 100%;">
-  
 				</div>
 			</div>
 			<button class="modal-close is-large" aria-label="close" @click="modal()"></button>
@@ -221,12 +221,13 @@ var card = {
          activeModal: false,
       }
    },
-   props:{
+   props: {
+      key: Number,
       title: String,
       extraData: String,
       preconditons: String,
       steps: String,
-      results: String   
+      results: String
    },
    methods: {
       toggleModal() {
@@ -236,24 +237,29 @@ var card = {
    components: {
       'Case': cases
    },
-   template: 
-   `
+   template: `
    <div>
-      <div class="notification is-primary doneCase case" v-on:remove="cases.splice(index, 1)" @click="toggleModal()">
-         {{ title }}
-         <button class="delete" v-on:click="$emit(\'remove\')"></button>
+      <div class="columns is-vcentered notification is-success doneCase case" style="padding: 1% 1% 1% 0% !important">
+         <a class="column" @click="toggleModal()" style="text-decoration:none">
+            {{ title }} {{ steps  }}
+         </a>
+         <div class="column is-1" style="margin-right: 2%;">
+            <button class="delete" v-on:click="$emit(\'remove\')"></button>
+            <button v-on:click="$emit(\'copy\')">
+               <i class="far fa-copy"></i>
+            </button> 
+         </div>
       </div>
       <div class="modal" v-bind:class="{ 'is-active' : this.activeModal }">
          <div class="modal-background"></div>
          <div class="modal-content">
-            <Case editButtons="true"></Case>
+            <Case></Case>
          </div>
          <button class="modal-close is-large" aria-label="close" @click="toggleModal()"></button>
       </div>
    </div>
    `
 }
-
 
 new Vue({
    el: '#app',
@@ -265,7 +271,7 @@ new Vue({
    components: {
       'Case': cases,
       'Navbar': navbar,
-	  'Card': card
+      'Card': card
    }
 })
 

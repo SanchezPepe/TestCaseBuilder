@@ -49,6 +49,10 @@
 			margin: 2% 4% 0 4%;
 		}
 
+      .roundbt{
+         border-radius: 100% !important;
+      }
+
 		/** Overflow scroll bar**/
 		/* width */
 		::-webkit-scrollbar {
@@ -87,8 +91,11 @@
 
 			<div class="grid-item">
 				<h1 class="subtitle title">Documented</h1>
-				<Card v-for="(c, index) in cases" v-bind:key="c.id" v-bind:title="c.title"
-					v-on:remove="cases.splice(index, 1)">
+            <Card v-for="(c, index) in cases" 
+                  v-bind:key="c.id" 
+                  v-bind:title="c.title"
+                  v-on:remove="cases.splice(index, 1)" 
+                  v-on:copy="cases.push({'id':cases.length + 1,'title': cases[index].title + '_Copy','preconditons':cases[index].preconditons,'steps':cases[index].steps,'results':cases[index].results})">
 				</Card>
 			</div>
 		</div>
