@@ -125,6 +125,7 @@ var navbar = {
       fileUpload(event) {
          this.fileName = event.target.files[0].name;
          if (event.target.files.length > 0 && this.fileName.includes('json')) {
+            this.title = this.fileName.substring(0, this.fileName.length - 15);
             this.file = event.target.files[0];
             var reader = new FileReader();
             reader.onload = this.onReaderLoad;
@@ -240,7 +241,7 @@ var card = {
    template: `
    <div>
       <div class="columns is-vcentered notification is-success doneCase case" style="padding: 1% 1% 1% 0% !important">
-         <a class="column" @click="toggleModal()" style="text-decoration:none">
+         <a class="column subtitle" @click="toggleModal()" style="text-decoration:none; margin: 0%;">
             {{ title }} {{ steps  }}
          </a>
          <div class="column is-1" style="margin-right: 2%;">
