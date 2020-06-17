@@ -10,7 +10,25 @@ var cases = {
    },
    props: {
       buttons: false,
-      id: 0
+      isUpdate: false,
+      id: Number
+   },
+   created(){
+      if(this.id !== undefined){
+         let data;
+         let cases = this.$root.$data.cases;          
+         for(let i = 0; i < cases.length; i++){
+            if(cases[i].id === this.id){
+               data = cases[i];
+               break;
+            }
+         }
+         this.title = data.title;
+         this.extraData = data.data;
+         this.preconditons = data.preconditons;
+         this.steps = data.steps;
+         this.results = data.results;
+      }
    },
    methods: {
       clear() {
@@ -22,11 +40,11 @@ var cases = {
       },
       submit() {
          if (this.title !== '') {
-            let cases = this.$root.$data.cases.length;
+            let cases = this.$root.$data.cases;          
             let newCase = {
-               id: cases + 1,
+               id: (cases.length > 0) ? cases[cases.length-1].id + 1 : 1,
                title: this.title,
-               data: this.data,
+               data: this.extraData,
                preconditons: this.preconditons,
                steps: this.steps,
                results: this.results
@@ -34,7 +52,26 @@ var cases = {
             this.$root.$data.cases.push(newCase);
             this.clear();
          }
-      }
+      },
+      updateCase() {
+         let cases = this.$root.$data.cases;
+         let index;
+         for(index = 0; index < cases.length; index++){
+            if(cases[index].id === this.id){
+               break;
+            }
+         }
+         let modifedCase = {
+            id: this.id,
+            title: this.title,
+            data: this.data,
+            preconditons: this.preconditons,
+            steps: this.steps,
+            results: this.results
+         }
+         console.log(this.id, index, modifedCase);
+         cases[index] = modifedCase;
+      },
    },
    template: `
       <div class="case has-text-left">
@@ -44,7 +81,8 @@ var cases = {
                   <input class="input" placeholder="Test case title" v-model="title" ondragstart="dragstart_handler(event);" draggable="true"></input>
                </div>
                <div class="column is-one-quarter" v-if='buttons'>
-                  <button class="button is-small is-success" @click="submit()">✔️</button>
+                  <button class="button is-small is-success" v-if="isUpdate" @click="updateCase()">✔️</button>
+                  <button class="button is-small is-success" v-else @click="submit()">✔️</button>
                   <button class="button is-small is-danger " @click="clear()">❌</button>
                </div>
             </div>
@@ -77,7 +115,6 @@ var cases = {
                <textarea class="textarea" rows="2" v-model="results" ondragstart="dragstart_handler(event);" draggable="true"></textarea>
             </div>
          </div>
-
       <div>
    `
 }
@@ -223,12 +260,7 @@ var card = {
       }
    },
    props: {
-      key: Number,
-      title: String,
-      extraData: String,
-      preconditons: String,
-      steps: String,
-      results: String
+      obj: String
    },
    methods: {
       toggleModal() {
@@ -242,7 +274,7 @@ var card = {
    <div>
       <div class="columns is-vcentered notification is-success doneCase case" style="padding: 1% 1% 1% 0% !important">
          <a class="column subtitle" @click="toggleModal()" style="text-decoration:none; margin: 0%;">
-            {{ title }} {{ steps  }}
+            {{ obj.title }}
          </a>
          <div class="column is-1" style="margin-right: 2%;">
             <button class="delete" v-on:click="$emit(\'remove\')"></button>
@@ -254,7 +286,7 @@ var card = {
       <div class="modal" v-bind:class="{ 'is-active' : this.activeModal }">
          <div class="modal-background"></div>
          <div class="modal-content">
-            <Case></Case>
+            <Case v-bind:id="obj.id" buttons="true" isUpdate="true"></Case>
          </div>
          <button class="modal-close is-large" aria-label="close" @click="toggleModal()"></button>
       </div>
