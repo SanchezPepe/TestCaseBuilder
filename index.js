@@ -75,16 +75,16 @@ var cases = {
       },
    },
    template: `
-      <div class="case has-text-left">
+      <div class="case has-text-left" v-if="" @keyup.enter="isUpdate ? updateCase() : submit()">
          <div class="field box has-text-centered">
             <div class="columns is-vcentered">
                <div class="column">
                   <input class="input" placeholder="Test case title" v-model="title" ondragstart="dragstart_handler(event);" draggable="true"></input>
                </div>
                <div class="column is-one-quarter" v-if='buttons'>
-                  <button class="button is-small is-success" v-if="isUpdate" @click="updateCase()">✔️</button>
-                  <button class="button is-small is-success" v-else @click="submit()">✔️</button>
-                  <button class="button is-small is-danger " @click="clear()">❌</button>
+                  <button class="button is-small is-success" v-if="isUpdate" @click="updateCase()" tabindex="-1">✔️</button>
+                  <button class="button is-small is-success" v-else @click="submit()" tabindex="-1">✔️</button>
+                  <button class="button is-small is-danger " @click="clear()" tabindex="-1">❌</button>
                </div>
             </div>
          </div>
