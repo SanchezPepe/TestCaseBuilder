@@ -2,104 +2,106 @@
 <html lang="en">
 
 <head>
-	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.2/css/bulma.min.css">
-	<script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Test Case Builder</title>
-	<style>
-		html,
-		body,
-		#app {
-			margin: 0;
-			height: 100%;
-		}
+   <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.2/css/bulma.min.css">
+   <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Test Case Builder</title>
+   <style>
+      html,
+      body,
+      #app {
+         margin: 0;
+         height: 100%;
+      }
 
-		.grid-container {
-			height: 95%;
-			display: grid;
-			grid-template-columns: 33% 33% 34%;
-			grid-template-rows: repeat(1, auto);
-			background-color: #2196F3;
-		}
+      .grid-container {
+         height: 95%;
+         display: grid;
+         grid-template-columns: 33% 33% 34%;
+         grid-template-rows: repeat(1, auto);
+         background-color: #2196F3;
+      }
 
-		.grid-item {
-			background-color: rgba(255, 255, 255, 0.8);
-			border: 1px solid rgba(0, 0, 0, 0.8);
-			font-size: 20px;
-			text-align: center;
-			grid-row-start: span 1;
-		}
+      .grid-item {
+         background-color: rgba(255, 255, 255, 0.8);
+         border: 1px solid rgba(0, 0, 0, 0.8);
+         font-size: 20px;
+         text-align: center;
+         grid-row-start: span 1;
+      }
 
-		.case {
-			margin: 0% 4% 4% 4%;
-		}
+      .case {
+         margin: 0% 4% 4% 4%;
+      }
 
-		.grid-item {
-			overflow: auto;
-		}
+      .grid-item {
+         overflow: auto;
+      }
 
-		.doneCase {
-			background-color: rgb(39, 105, 74);
-			color: white;
-		}
+      .doneCase {
+         background-color: rgb(39, 105, 74);
+         color: white;
+      }
 
-		.title {
-			margin: 2% 4% 0 4%;
-		}
+      .title {
+         margin: 2% 4% 0 4%;
+      }
 
-      .roundbt{
+      .roundbt {
          border-radius: 100% !important;
       }
 
-		/** Overflow scroll bar**/
-		/* width */
-		::-webkit-scrollbar {
-			width: 7px;
-		}
+      .sectionTitle {
+         margin: 3% !important;
+      }
 
-		/* Track */
-		::-webkit-scrollbar-track {
-			background: #f1f1f1;
-		}
+      /** Overflow scroll bar**/
+      /* width */
+      ::-webkit-scrollbar {
+         width: 7px;
+      }
 
-		/* Handle */
-		::-webkit-scrollbar-thumb {
-			background: #888;
-		}
+      /* Track */
+      ::-webkit-scrollbar-track {
+         background: #f1f1f1;
+      }
 
-		/* Handle on hover */
-		::-webkit-scrollbar-thumb:hover {
-			background: #555;
-		}
-	</style>
+      /* Handle */
+      ::-webkit-scrollbar-thumb {
+         background: #888;
+      }
+
+      /* Handle on hover */
+      ::-webkit-scrollbar-thumb:hover {
+         background: #555;
+      }
+   </style>
 </head>
 
 <body>
-	<div id="app">
-		<navbar></navbar>
-		<div class="grid-container">
-			<div class="grid-item">
-				<h1 class="subtitle title">Generic</h1>
-				<Case></Case>
-			</div>
-			<div class="grid-item">
-				<h1 class="subtitle title">New case</h1>
-				<Case buttons='true'></Case>
-			</div>
+   <div id="app">
+      <navbar></navbar>
+      <div class="grid-container">
+         <div class="grid-item">
+            <h1 class="subtitle sectionTitle ">Generic</h1>
+            <Case></Case>
+         </div>
+         <div class="grid-item">
+            <h1 class="subtitle sectionTitle">New case</h1>
+            <Case buttons='true'></Case>
+         </div>
 
-			<div class="grid-item">
-				<h1 class="subtitle title">Documented</h1>
-            <Card v-for="(c, index) in cases" 
-                  v-bind:obj="c"
-                  v-on:remove="cases.splice(index, 1)" 
-                  v-on:copy="cases.push({'id':cases[cases.length-1].id + 1,'title': cases[index].title + '_Copy','preconditons':cases[index].preconditons,'steps':cases[index].steps,'results':cases[index].results})">
-				</Card>
-			</div>
-		</div>
-	</div>
-	<script src="index.js"></script>
+         <div class="grid-item">
+            <h1 class="subtitle sectionTitle">Documented</h1>
+            <Card v-for="(c, index) in cases" v-bind:obj="c" v-on:remove="cases.splice(index, 1)"
+               v-on:copy="cases.push({'id':cases[cases.length-1].id + 1,'title': cases[index].title + '_Copy','preconditons':cases[index].preconditons,'steps':cases[index].steps,'results':cases[index].results})">
+            </Card>
+         </div>
+      </div>
+   </div>
+   <script src="index.js"></script>
 </body>
 
 </html>

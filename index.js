@@ -75,45 +75,45 @@ var cases = {
       },
    },
    template: `
-      <div class="case has-text-left" v-if="" @keyup.enter="isUpdate ? updateCase() : submit()">
-         <div class="field box has-text-centered">
-            <div class="columns is-vcentered">
-               <div class="column">
-                  <input class="input" placeholder="Test case title" v-model="title" ondragstart="dragstart_handler(event);" draggable="true"></input>
-               </div>
-               <div class="column is-one-quarter" v-if='buttons'>
-                  <button class="button is-small is-success" v-if="isUpdate" @click="updateCase()" tabindex="-1">✔️</button>
-                  <button class="button is-small is-success" v-else @click="submit()" tabindex="-1">✔️</button>
-                  <button class="button is-small is-danger " @click="clear()" tabindex="-1">❌</button>
-               </div>
+      <div class="case has-text-left" @keyup.enter="isUpdate ? updateCase() : submit()">
+         <div class="field box" v-bind:class="{ 'has-addons' : this.buttons }">
+            <div class="control is-expanded">
+               <input class="input" placeholder="Test case title" v-model="title" ondragstart="dragstart_handler(event);" draggable="true"></input>
+            </div>
+            <div class="control" v-if="buttons">
+               <button class="button is-success" v-if="isUpdate" @click="updateCase()" tabindex="-1">✔️</button>
+               <button class="button is-success" v-else @click="submit()" tabindex="-1">✔️</button>
+            </div>
+            <div class="control" v-if="buttons">
+               <button class="button is-danger " @click="clear()" tabindex="-1">❌</button>
             </div>
          </div>
 
          <div class="field box">
             <label class="label">Data</label>
             <div class="control">
-               <textarea class="textarea" rows="1" v-model='extraData' ondragstart="dragstart_handler(event);" draggable="true"></textarea>
+               <textarea class="textarea is-small" rows="1" v-model='extraData' ondragstart="dragstart_handler(event);" draggable="true"></textarea>
             </div>
          </div>
 
          <div class="field box">
             <label class="label">Preconditons</label>
             <div class="control">
-               <textarea class="textarea" rows="2" v-model="preconditons" ondragstart="dragstart_handler(event);" draggable="true"></textarea>
+               <textarea class="textarea is-small" rows="3" v-model="preconditons" ondragstart="dragstart_handler(event);" draggable="true"></textarea>
             </div>
          </div>
 
          <div class="field box">
             <label class="label">Steps</label>
             <div class="control">
-               <textarea class="textarea" rows="4" v-model="steps" ondragstart="dragstart_handler(event);" draggable="true"></textarea>
+               <textarea class="textarea is-small" rows="7" v-model="steps" ondragstart="dragstart_handler(event);" draggable="true"></textarea>
             </div>
          </div>
 
          <div class="field box">
             <label class="label">Results</label>
             <div class="control">
-               <textarea class="textarea" rows="2" v-model="results" ondragstart="dragstart_handler(event);" draggable="true"></textarea>
+               <textarea class="textarea is-small" rows="3" v-model="results" ondragstart="dragstart_handler(event);" draggable="true"></textarea>
             </div>
          </div>
       <div>
