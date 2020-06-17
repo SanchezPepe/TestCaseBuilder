@@ -70,7 +70,8 @@ var cases = {
             results: this.results
          }
          console.log(this.id, index, modifedCase);
-         cases[index] = modifedCase;
+         Vue.set(cases, index, modifedCase);
+         this.$parent.toggleModal();
       },
    },
    template: `
@@ -162,7 +163,7 @@ var navbar = {
       fileUpload(event) {
          this.fileName = event.target.files[0].name;
          if (event.target.files.length > 0 && this.fileName.includes('json')) {
-            this.title = this.fileName.substring(0, this.fileName.length - 15);
+            this.title = this.fileName.substring(0, this.fileName.indexOf('_'));
             this.file = event.target.files[0];
             var reader = new FileReader();
             reader.onload = this.onReaderLoad;
