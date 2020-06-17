@@ -284,9 +284,10 @@ function dragstart_handler(ev) {
 
 function dragover_handler(ev) {
    ev.preventDefault();
-}
-
-/**
- * 
- * 
- */
+   var data = ev.dataTransfer.getData("text");
+   /* If you use DOM manipulation functions, their default behaviour it not to 
+      copy but to alter and move elements. By appending a ".cloneNode(true)", 
+      you will not move the original element, but create a copy. */
+   var nodeCopy = document.getElementById(data).cloneNode(true);
+   ev.target.appendChild(nodeCopy);
+ }
