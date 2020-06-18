@@ -96,7 +96,7 @@
          <div class="grid-item">
             <h1 class="subtitle sectionTitle">Documented</h1>
             <Card v-for="(c, index) in cases" v-bind:obj="c" v-on:remove="cases.splice(index, 1)"
-               v-on:copy="cases.push({'id':cases[cases.length-1].id + 1,'title': cases[index].title + '_Copy','preconditons':cases[index].preconditons,'steps':cases[index].steps,'results':cases[index].results})">
+               v-on:copy="cases.push({'id':cases[cases.length-1].id + 1,'title': cases[index].title + '_Copy','data':cases[index].data,'preconditons':cases[index].preconditons,'steps':cases[index].steps,'results':cases[index].results})">
             </Card>
          </div>
       </div>

@@ -64,7 +64,7 @@ var cases = {
          let modifedCase = {
             id: this.id,
             title: this.title,
-            data: this.data,
+            data: this.extraData,
             preconditons: this.preconditons,
             steps: this.steps,
             results: this.results
@@ -175,28 +175,6 @@ var navbar = {
       onReaderLoad(event) {
          var obj = JSON.parse(event.target.result);
          this.$root.$data.cases = obj;
-      },
-      createCases() {
-         if (this.folder !== '') {
-            var x = document.getElementById("section_id");
-            var y = x.getElementsByTagName("option");
-            let i = 0;
-            let folderValue = -1;
-            do {
-               if (y[i].innerText.includes(this.folder)) {
-                  folderValue = y[i].value;
-               }
-               i++;
-            } while (i < y.length || folderValue !== '');
-            if (folderValue !== -1) {
-               x.value = folderValue;
-            } else {
-               alert("Folder not found");
-            }
-
-         } else {
-            alert("Select a folder to create the Test Cases")
-         }
       }
    },
    template: `
@@ -241,7 +219,7 @@ var navbar = {
  						<input class="input" v-model="folder" placeholder="Folder to create cases">							
 				</div>
 				<div class="column is-one-fifth">
-					<a class="button is-link" @click="createCases()">Create Cases</a>
+					<a class="button is-link" @click="">Create Cases</a>
 				</div>
 			</div>
 			<div class="modal-content" style="width: 90%; height: 86%;">
