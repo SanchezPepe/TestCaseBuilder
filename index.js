@@ -239,30 +239,41 @@ var card = {
       }
    },
    props: {
+      index: Number,
       obj: String
    },
    methods: {
       toggleModal() {
          this.activeModal = !this.activeModal;
+      },
+      remove() {
+         this.$root.$data.cases.splice(this.index, 1)
+      },
+      copy(){
+         let cases = this.$root.$data.cases;
+         let newCase = {'id':cases[cases.length-1].id + 1,'title': 'CopyOf_' + cases[this.index].title,'data':cases[this.index].data,'preconditons':cases[this.index].preconditons,'steps':cases[this.index].steps,'results':cases[this.index].results };
+         this.$root.$data.cases.push(newCase);
       }
    },
    components: {
       'Case': cases
    },
-   template: `
-   <div>
-      <div class="columns is-vcentered notification is-success doneCase case" style="padding: 1% 1% 1% 0% !important">
-         <a class="column subtitle" @click="toggleModal()" style="text-decoration:none; margin: 0%;">
-            {{ obj.title }}
-         </a>
-         <div class="column is-1" style="margin-right: 2%;">
-            <button class="delete" v-on:click="$emit(\'remove\')"></button>
-            <button v-on:click="$emit(\'copy\')">
-               <i class="far fa-copy"></i>
-            </button> 
-         </div>
+   template: 
+   `
+   <div class="columns is-vcentered has-background-primary-dark casesTable">
+      <a class="column documentedCase subtitle is-size-6" @click="toggleModal()">
+         {{ obj.title }}
+      </a>
+      <div class="column is-2 documentedCase buttons">
+         <button @click="copy">
+            <i class="far fa-copy"></i>
+         </button>
+         <button @click="remove">
+            <i class="far fa-trash-alt"></i>
+         </button>
       </div>
-      <div class="modal" v-bind:class="{ 'is-active' : this.activeModal }">
+
+      <div class="modal" v-bind:class="{ 'is-active' : this.activeModal }" @keyup.enter="toggleModal()">
          <div class="modal-background"></div>
          <div class="modal-content">
             <Case v-bind:id="obj.id" buttons="true" isUpdate="true"></Case>
@@ -270,6 +281,7 @@ var card = {
          <button class="modal-close is-large" aria-label="close" @click="toggleModal()"></button>
       </div>
    </div>
+
    `
 }
 
@@ -283,7 +295,7 @@ new Vue({
    components: {
       'Case': cases,
       'Navbar': navbar,
-      'Card': card
+      'row': card
    }
 })
 
