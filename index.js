@@ -75,45 +75,45 @@ var cases = {
       },
    },
    template: `
-      <div class="case has-text-left" @keyup.enter="isUpdate ? updateCase() : submit()">
+      <div class="case has-text-left" @keyup.alt.71="isUpdate ? updateCase() : submit()">
          <div class="field box" v-bind:class="{ 'has-addons' : this.buttons }">
             <div class="control is-expanded">
-               <input class="input" placeholder="Test case title" v-model="title" ondragstart="dragstart_handler(event);" draggable="true"></input>
+               <input class="input is-small" placeholder="Test case title" v-model="title"></input>
             </div>
             <div class="control" v-if="buttons">
-               <button class="button is-success" v-if="isUpdate" @click="updateCase()" tabindex="-1">✔️</button>
-               <button class="button is-success" v-else @click="submit()" tabindex="-1">✔️</button>
+               <button class="button is-success is-small" v-if="isUpdate" @click="updateCase()" tabindex="-1">✔️</button>
+               <button class="button is-success is-small" v-else @click="submit()" tabindex="-1">✔️</button>
             </div>
             <div class="control" v-if="buttons">
-               <button class="button is-danger " @click="clear()" tabindex="-1">❌</button>
+               <button class="button is-danger is-small" @click="clear()" tabindex="-1">❌</button>
             </div>
          </div>
 
          <div class="field box">
             <label class="label">Data</label>
             <div class="control">
-               <textarea class="textarea is-small" rows="1" v-model='extraData' ondragstart="dragstart_handler(event);" draggable="true"></textarea>
+               <textarea class="textarea is-small" rows="1" v-model='extraData'></textarea>
             </div>
          </div>
 
          <div class="field box">
             <label class="label">Preconditons</label>
             <div class="control">
-               <textarea class="textarea is-small" rows="3" v-model="preconditons" ondragstart="dragstart_handler(event);" draggable="true"></textarea>
+               <textarea class="textarea is-small" rows="3" v-model="preconditons"></textarea>
             </div>
          </div>
 
          <div class="field box">
             <label class="label">Steps</label>
             <div class="control">
-               <textarea class="textarea is-small" rows="7" v-model="steps" ondragstart="dragstart_handler(event);" draggable="true"></textarea>
+               <textarea class="textarea is-small" rows="7" v-model="steps"></textarea>
             </div>
          </div>
 
          <div class="field box">
             <label class="label">Results</label>
             <div class="control">
-               <textarea class="textarea is-small" rows="3" v-model="results" ondragstart="dragstart_handler(event);" draggable="true"></textarea>
+               <textarea class="textarea is-small" rows="3" v-model="results"></textarea>
             </div>
          </div>
       <div>
@@ -215,10 +215,7 @@ var navbar = {
 				<div class="column">
  						<input class="input" v-model="url" placeholder="URL to visit">							
 				</div>
-				<div class="column">
- 						<input class="input" v-model="folder" placeholder="Folder to create cases">							
-				</div>
-				<div class="column is-one-fifth">
+				<div class="column is-1">
 					<a class="button is-link" @click="">Create Cases</a>
 				</div>
 			</div>
@@ -239,30 +236,41 @@ var card = {
       }
    },
    props: {
+      index: Number,
       obj: String
    },
    methods: {
       toggleModal() {
          this.activeModal = !this.activeModal;
+      },
+      remove() {
+         this.$root.$data.cases.splice(this.index, 1)
+      },
+      copy(){
+         let cases = this.$root.$data.cases;
+         let newCase = {'id':cases[cases.length-1].id + 1,'title': 'CopyOf_' + cases[this.index].title,'data':cases[this.index].data,'preconditons':cases[this.index].preconditons,'steps':cases[this.index].steps,'results':cases[this.index].results };
+         this.$root.$data.cases.push(newCase);
       }
    },
    components: {
       'Case': cases
    },
-   template: `
-   <div>
-      <div class="columns is-vcentered notification is-success doneCase case" style="padding: 1% 1% 1% 0% !important">
-         <a class="column subtitle" @click="toggleModal()" style="text-decoration:none; margin: 0%;">
-            {{ obj.title }}
-         </a>
-         <div class="column is-1" style="margin-right: 2%;">
-            <button class="delete" v-on:click="$emit(\'remove\')"></button>
-            <button v-on:click="$emit(\'copy\')">
-               <i class="far fa-copy"></i>
-            </button> 
-         </div>
+   template: 
+   `
+   <div class="columns is-vcentered has-background-primary-dark casesTable">
+      <a class="column documentedCase subtitle is-size-6" @click="toggleModal()">
+         {{ obj.title }}
+      </a>
+      <div class="column is-2 documentedCase buttons">
+         <button @click="copy">
+            <i class="far fa-copy"></i>
+         </button>
+         <button @click="remove">
+            <i class="far fa-trash-alt"></i>
+         </button>
       </div>
-      <div class="modal" v-bind:class="{ 'is-active' : this.activeModal }">
+
+      <div class="modal" v-bind:class="{ 'is-active' : this.activeModal }" @keyup.enter="toggleModal()">
          <div class="modal-background"></div>
          <div class="modal-content">
             <Case v-bind:id="obj.id" buttons="true" isUpdate="true"></Case>
@@ -270,6 +278,7 @@ var card = {
          <button class="modal-close is-large" aria-label="close" @click="toggleModal()"></button>
       </div>
    </div>
+
    `
 }
 
@@ -283,22 +292,6 @@ new Vue({
    components: {
       'Case': cases,
       'Navbar': navbar,
-      'Card': card
+      'row': card
    }
 })
-
-
-function dragstart_handler(ev) {
-   // Set the drag's format and data. Use the event target's id for the data 
-   ev.dataTransfer.setData("text", ev.target.value);
-}
-
-function dragover_handler(ev) {
-   ev.preventDefault();
-   var data = ev.dataTransfer.getData("text");
-   /* If you use DOM manipulation functions, their default behaviour it not to 
-      copy but to alter and move elements. By appending a ".cloneNode(true)", 
-      you will not move the original element, but create a copy. */
-   var nodeCopy = document.getElementById(data).cloneNode(true);
-   ev.target.appendChild(nodeCopy);
- }

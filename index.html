@@ -3,7 +3,8 @@
 
 <head>
    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.2/css/bulma.min.css">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.css">
+
    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,11 +22,15 @@
          display: grid;
          grid-template-columns: 33% 33% 34%;
          grid-template-rows: repeat(1, auto);
-         background-color: #2196F3;
+         background-color: #00335d;
+      }
+
+      h1 {
+         color: white !important;
       }
 
       .grid-item {
-         background-color: rgba(255, 255, 255, 0.8);
+         background-color: #004177;
          border: 1px solid rgba(0, 0, 0, 0.8);
          font-size: 20px;
          text-align: center;
@@ -33,24 +38,31 @@
       }
 
       .case {
-         margin: 0% 4% 4% 4%;
+         margin: 0% 3% 3% 3%;
+      }
+
+      a {
+         text-decoration: none !important;
+         word-wrap: break-word;
+         color: white !important;
+      }
+
+      .documentedCase{
+         padding: 1% !important;
+         margin: 0% !important;
       }
 
       .grid-item {
          overflow: auto;
       }
 
-      .doneCase {
-         background-color: rgb(39, 105, 74);
-         color: white;
-      }
-
       .title {
          margin: 2% 4% 0 4%;
       }
 
-      .roundbt {
-         border-radius: 100% !important;
+      .casesTable{
+         border: #f1f1f1 solid 1px;
+         margin: 0% 2% 0.5% 2% !important;
       }
 
       .sectionTitle {
@@ -94,10 +106,12 @@
          </div>
 
          <div class="grid-item">
-            <h1 class="subtitle sectionTitle">Documented</h1>
-            <Card v-for="(c, index) in cases" v-bind:obj="c" v-on:remove="cases.splice(index, 1)"
-               v-on:copy="cases.push({'id':cases[cases.length-1].id + 1,'title': cases[index].title + '_Copy','data':cases[index].data,'preconditons':cases[index].preconditons,'steps':cases[index].steps,'results':cases[index].results})">
-            </Card>
+            <h1 class="subtitle sectionTitle">Documented ({{ cases.length }})</h1>
+            <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+               <tbody>
+                  <row v-for="(c, index) in cases" :obj="c" :index="index"></row>
+               </tbody>
+            </table>
          </div>
       </div>
    </div>
