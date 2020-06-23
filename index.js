@@ -215,10 +215,7 @@ var navbar = {
 				<div class="column">
  						<input class="input" v-model="url" placeholder="URL to visit">							
 				</div>
-				<div class="column">
- 						<input class="input" v-model="folder" placeholder="Folder to create cases">							
-				</div>
-				<div class="column is-one-fifth">
+				<div class="column is-1">
 					<a class="button is-link" @click="">Create Cases</a>
 				</div>
 			</div>
