@@ -78,7 +78,7 @@ var cases = {
       <div class="case has-text-left" @keyup.alt.71="isUpdate ? updateCase() : submit()">
          <div class="field box" v-bind:class="{ 'has-addons' : this.buttons }">
             <div class="control is-expanded">
-               <input class="input is-small" placeholder="Test case title" v-model="title" ondragstart="dragstart_handler(event);" draggable="true"></input>
+               <input class="input is-small" placeholder="Test case title" v-model="title"></input>
             </div>
             <div class="control" v-if="buttons">
                <button class="button is-success is-small" v-if="isUpdate" @click="updateCase()" tabindex="-1">✔️</button>
@@ -92,28 +92,28 @@ var cases = {
          <div class="field box">
             <label class="label">Data</label>
             <div class="control">
-               <textarea class="textarea is-small" rows="1" v-model='extraData' ondragstart="dragstart_handler(event);" draggable="true"></textarea>
+               <textarea class="textarea is-small" rows="1" v-model='extraData'></textarea>
             </div>
          </div>
 
          <div class="field box">
             <label class="label">Preconditons</label>
             <div class="control">
-               <textarea class="textarea is-small" rows="3" v-model="preconditons" ondragstart="dragstart_handler(event);" draggable="true"></textarea>
+               <textarea class="textarea is-small" rows="3" v-model="preconditons"></textarea>
             </div>
          </div>
 
          <div class="field box">
             <label class="label">Steps</label>
             <div class="control">
-               <textarea class="textarea is-small" rows="7" v-model="steps" ondragstart="dragstart_handler(event);" draggable="true"></textarea>
+               <textarea class="textarea is-small" rows="7" v-model="steps"></textarea>
             </div>
          </div>
 
          <div class="field box">
             <label class="label">Results</label>
             <div class="control">
-               <textarea class="textarea is-small" rows="3" v-model="results" ondragstart="dragstart_handler(event);" draggable="true"></textarea>
+               <textarea class="textarea is-small" rows="3" v-model="results"></textarea>
             </div>
          </div>
       <div>
@@ -298,19 +298,3 @@ new Vue({
       'row': card
    }
 })
-
-
-function dragstart_handler(ev) {
-   // Set the drag's format and data. Use the event target's id for the data 
-   ev.dataTransfer.setData("text", ev.target.value);
-}
-
-function dragover_handler(ev) {
-   ev.preventDefault();
-   var data = ev.dataTransfer.getData("text");
-   /* If you use DOM manipulation functions, their default behaviour it not to 
-      copy but to alter and move elements. By appending a ".cloneNode(true)", 
-      you will not move the original element, but create a copy. */
-   var nodeCopy = document.getElementById(data).cloneNode(true);
-   ev.target.appendChild(nodeCopy);
- }
