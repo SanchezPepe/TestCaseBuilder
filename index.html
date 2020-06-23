@@ -21,11 +21,15 @@
          display: grid;
          grid-template-columns: 33% 33% 34%;
          grid-template-rows: repeat(1, auto);
-         background-color: #2196F3;
+         background-color: #00335d;
+      }
+
+      h1{
+         color: white !important;
       }
 
       .grid-item {
-         background-color: rgba(255, 255, 255, 0.8);
+         background-color: #004177;
          border: 1px solid rgba(0, 0, 0, 0.8);
          font-size: 20px;
          text-align: center;
@@ -94,7 +98,7 @@
          </div>
 
          <div class="grid-item">
-            <h1 class="subtitle sectionTitle">Documented</h1>
+            <h1 class="subtitle sectionTitle">Documented ({{ cases.length }})</h1>
             <Card v-for="(c, index) in cases" v-bind:obj="c" v-on:remove="cases.splice(index, 1)"
                v-on:copy="cases.push({'id':cases[cases.length-1].id + 1,'title': cases[index].title + '_Copy','data':cases[index].data,'preconditons':cases[index].preconditons,'steps':cases[index].steps,'results':cases[index].results})">
             </Card>

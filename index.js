@@ -75,17 +75,17 @@ var cases = {
       },
    },
    template: `
-      <div class="case has-text-left" @keyup.enter="isUpdate ? updateCase() : submit()">
+      <div class="case has-text-left" @keyup.alt.71="isUpdate ? updateCase() : submit()">
          <div class="field box" v-bind:class="{ 'has-addons' : this.buttons }">
             <div class="control is-expanded">
-               <input class="input" placeholder="Test case title" v-model="title" ondragstart="dragstart_handler(event);" draggable="true"></input>
+               <input class="input is-small" placeholder="Test case title" v-model="title" ondragstart="dragstart_handler(event);" draggable="true"></input>
             </div>
             <div class="control" v-if="buttons">
-               <button class="button is-success" v-if="isUpdate" @click="updateCase()" tabindex="-1">✔️</button>
-               <button class="button is-success" v-else @click="submit()" tabindex="-1">✔️</button>
+               <button class="button is-success is-small" v-if="isUpdate" @click="updateCase()" tabindex="-1">✔️</button>
+               <button class="button is-success is-small" v-else @click="submit()" tabindex="-1">✔️</button>
             </div>
             <div class="control" v-if="buttons">
-               <button class="button is-danger " @click="clear()" tabindex="-1">❌</button>
+               <button class="button is-danger is-small" @click="clear()" tabindex="-1">❌</button>
             </div>
          </div>
 
