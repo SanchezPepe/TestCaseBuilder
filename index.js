@@ -5,7 +5,9 @@ var cases = {
          extraData: '',
          preconditons: '',
          steps: '',
-         results: ''
+         results: '',
+         isDraggable: false,
+         dataField: false
       }
    },
    props: {
@@ -75,8 +77,9 @@ var cases = {
       },
    },
    template: `
-      <div class="case has-text-left" @keyup.alt.71="isUpdate ? updateCase() : submit()">
-         <div class="field box" v-bind:class="{ 'has-addons' : this.buttons }">
+   <div class="case has-text-left" @keyup.alt.71="isUpdate ? updateCase() : submit()">
+      <div class="box">
+         <div class="field bottomMargin" v-bind:class="{ 'has-addons' : this.buttons }">
             <div class="control is-expanded">
                <input class="input is-small" placeholder="Test case title" v-model="title"></input>
             </div>
@@ -89,34 +92,48 @@ var cases = {
             </div>
          </div>
 
-         <div class="field box">
-            <label class="label">Data</label>
-            <div class="control">
-               <textarea class="textarea is-small" rows="1" v-model='extraData'></textarea>
-            </div>
-         </div>
+         <div>
+            <label class="checkbox control">
+               <input type="checkbox" v-model="isDraggable">
+               Drag & Drop
+            </label>
 
-         <div class="field box">
-            <label class="label">Preconditons</label>
-            <div class="control">
-               <textarea class="textarea is-small" rows="3" v-model="preconditons"></textarea>
-            </div>
+            <label class="checkbox control">
+               <input type="checkbox" v-model="dataField">
+               Enable Data Input
+            </label>
          </div>
+      </div>
 
-         <div class="field box">
-            <label class="label">Steps</label>
-            <div class="control">
-               <textarea class="textarea is-small" rows="7" v-model="steps"></textarea>
-            </div>
+      <div class="field box" v-if="dataField">
+         <label class="label">Data</label>
+         <div class="control">
+            <textarea class="textarea is-small" rows="1" v-model='extraData' ondragstart="dragstart_handler(event);" :draggable="isDraggable"></textarea>
          </div>
+      </div>
 
-         <div class="field box">
-            <label class="label">Results</label>
-            <div class="control">
-               <textarea class="textarea is-small" rows="3" v-model="results"></textarea>
-            </div>
+      <div class="field box">
+         <label class="label">Preconditons</label>
+         <div class="control">
+            <textarea class="textarea is-small" rows="3" v-model="preconditons" ondragstart="dragstart_handler(event);" :draggable="isDraggable"></textarea>
          </div>
-      <div>
+      </div>
+
+      <div class="field box">
+         <label class="label">Steps</label>
+         <div class="control">
+            <textarea class="textarea is-small" rows="7" v-model="steps" ondragstart="dragstart_handler(event);" :draggable="isDraggable"></textarea>
+         </div>
+      </div>
+
+      <div class="field box">
+         <label class="label">Results</label>
+         <div class="control">
+            <textarea class="textarea is-small" rows="3" v-model="results" ondragstart="dragstart_handler(event);" :draggable="isDraggable"></textarea>
+         </div>
+      </div>
+   </div>
+
    `
 }
 
@@ -295,3 +312,18 @@ new Vue({
       'row': card
    }
 })
+
+function dragstart_handler(ev) {	
+   // Set the drag's format and data. Use the event target's id for the data 	
+   ev.dataTransfer.setData("text", ev.target.value);	
+}	
+
+function dragover_handler(ev) {	
+   ev.preventDefault();	
+   var data = ev.dataTransfer.getData("text");	
+   /* If you use DOM manipulation functions, their default behaviour it not to 	
+      copy but to alter and move elements. By appending a ".cloneNode(true)", 	
+      you will not move the original element, but create a copy. */	
+   var nodeCopy = document.getElementById(data).cloneNode(true);	
+   ev.target.appendChild(nodeCopy);	
+ }
