@@ -129,11 +129,10 @@ var cases = {
       <div class="field box">
          <label class="label">Results</label>
          <div class="control">
-            <textarea class="textarea is-small" rows="3" v-model="results" ondragstart="dragstart_handler(event);" :draggable="isDraggable"></textarea>
+            <textarea class="textarea is-small" rows="4" v-model="results" ondragstart="dragstart_handler(event);" :draggable="isDraggable"></textarea>
          </div>
       </div>
    </div>
-
    `
 }
 
@@ -196,9 +195,9 @@ var navbar = {
    },
    template: `
    <div style="height: 5%; display: flex; justify-content:space-between;">
-      <div class="form subtitle" style="margin: 0.5% 0.5%; display:flex; vertical-align: middle;   ">
-         <label class="label" style="white-space: nowrap; margin: 2% 6% 2% 2%">Testing: </label>
-         <input v-model="title" class="input is-small" type="text" placeholder="Test name">
+      <div class="columns is-vcentered" style="margin: 0.5%;">
+         <label class="column is-one-third label" style="white-space: nowrap; margin: 2% 0% 2% 2%; padding-right: 0%;">Testing:</label>
+         <input class="column input is-small" v-model="title"  type="text" placeholder="Test name">
       </div>
 	  <div class="columns is-vcentered" style="margin: 1%">
 		<div class="column">
