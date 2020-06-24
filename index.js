@@ -97,7 +97,7 @@ var cases = {
                <input type="checkbox" v-model="isDraggable">
                Drag & Drop
             </label>
-
+            |
             <label class="checkbox control">
                <input type="checkbox" v-model="dataField">
                Enable Data Input
