@@ -263,7 +263,7 @@ function loadCases() {
 	  <div class="columns is-vcentered" style="margin: 1%">
 		<div class="column">
 			<a class="button is-small is-link" @click="modal()">
-				<strong>Create Test Cases</strong>
+				<strong>Upload TestCases</strong>
 			</a>	
 		</div>
         <div class="column">
@@ -288,19 +288,18 @@ function loadCases() {
 	  </div>
 	  <div class="modal" v-bind:class="{ 'is-active' : this.active }">
 			<div class="modal-background"></div>
-			<div class="modal-content" style="width: 90%; height: 86%;">
-            <div style="height: 100%;">
-            <div class="box is-success subtitle">
-               <p class="subtitle">
-                  Copy and paste this in console to upload tests 
-                  <br>
-                  <a class="button is-small is-success" @click="copyToClipboard()">Copy to Clipboard</a>
+			<div class="modal-content" style="width: 45%; height: 86%; padding: 0.5%;">
+            <div class="is-success subtitle" style="margin-bottom: 2%;">
+               <p class="subtitle box has-text-centered">
+                  Copy and paste this text in a web console to upload tests 
                </p>
+               <a class="button is-success subtitle" @click="copyToClipboard()">
+                  Copy to Clipboard
+               </a>
             </div>
-            <pre ref="codeText">var data = {{ this.$root.$data.cases }};
+            <pre class="box" ref="codeText">var data = {{ this.$root.$data.cases }};
                {{ loadFunction }}
             </pre>
-				</div>
 			</div>
 			<button class="modal-close is-large" aria-label="close" @click="modal()"></button>
 		</div>
