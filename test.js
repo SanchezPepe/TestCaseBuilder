@@ -1,44 +1,10 @@
-var data = [{
-      "id": 3,
-      "title": "TEST A",
-      "data": "A",
-      "preconditons": "A",
-      "steps": "A",
-      "results": "A"
-   },
-   {
-      "id": 3,
-      "title": "TEST B",
-      "data": "B",
-      "preconditons": "B",
-      "steps": "B",
-      "results": "B"
-   },
-   {
-      "id": 3,
-      "title": "TEST C",
-      "data": "A",
-      "preconditons": "A",
-      "steps": "A",
-      "results": "A"
-   },
-   {
-      "id": 3,
-      "title": "TEST D",
-      "data": "B",
-      "preconditons": "B",
-      "steps": "B",
-      "results": "B"
-   }
-]
-
-function loadCasesTR() {
+function loadCases() {
    let timeout = 1000;
    var testCase;
-   for (let i = 0; i < data2.length; i++) {
+   for (let i = 0; i < data.length; i++) {
       // Add new case button
       setTimeout(function () {
-         testCase = data2[i];
+         testCase = data[i];
          console.log(testCase);
          document.getElementsByClassName("link")[2].click();
       }, ((i * 7) + 1) * timeout);
@@ -78,46 +44,6 @@ function loadCasesTR() {
       setTimeout(function () {
          document.getElementById("accept").removeAttribute("disabled");
          document.getElementById("accept").click();
-      }, ((i * 7) + 7) * timeout);
-   };
-}
-
-
-function checkTime(n) {
-   let timeout = 1000;
-   for (let i = 0; i < n; i++) {
-      // Add new case button
-      setTimeout(function () {
-         console.log("Segundos: ", ((i * 7) + 1), "i = ", i + 1)
-      }, ((i * 7) + 1) * timeout);
-      // Title input
-      setTimeout(function () {
-         console.log("Segundos: ", ((i * 7) + 2), "i = ", i + 1)
-      }, ((i * 7) + 2) * timeout);
-
-      // Submit new case
-      setTimeout(function () {
-         console.log("Segundos: ", ((i * 7) + 3), "i = ", i + 1)
-      }, ((i * 7) + 3) * timeout);
-
-      // Open the new case
-      setTimeout(function () {
-         console.log("Segundos: ", ((i * 7) + 4), "i = ", i + 1)
-      }, ((i * 7) + 4) * timeout);
-
-      // Hit panel edit button
-      setTimeout(function () {
-         console.log("Segundos: ", ((i * 7) + 5), "i = ", i + 1)
-      }, ((i * 7) + 5) * timeout);
-
-      // Fill test case info
-      setTimeout(function () {
-         console.log("Segundos: ", ((i * 7) + 6), "i = ", i + 1)
-      }, ((i * 7) + 6) * timeout);
-
-      // Save test case
-      setTimeout(function () {
-         console.log("Segundos: ", ((i * 7) + 7), "i = ", i + 1)
       }, ((i * 7) + 7) * timeout);
    };
 }

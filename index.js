@@ -143,15 +143,58 @@ var navbar = {
          fileName: '',
          file: '',
          active: false,
-         url: '',
-         folder: '',
-         webpage: false
-      }
-   },
-   computed: {
-      webframe() {
-         return '<iframe id="myFrame" src="' + this.url + '" style="border: 2px solid blue; overflow:auto;" width="100%" height="100%"></iframe>';
-         //return '<object type="text/html" v-if="webpage" data="'+ this.url + '" width="100%" height="100%" style=" border:5px black"></object>';	
+         loadFunction: 
+         `
+function loadCases() {
+   let timeout = 1000;
+   var testCase;
+   for (let i = 0; i < data.length; i++) {
+      // Add new case button
+      setTimeout(function () {
+         testCase = data[i];
+         console.log(testCase);
+         document.getElementsByClassName("link")[2].click();
+      }, ((i * 7) + 1) * timeout);
+
+      // Title input
+      setTimeout(function () {
+         document.getElementsByClassName("form-control-large")[0].value = testCase.title;
+      }, ((i * 7) + 2) * timeout);
+
+      // Submit new case
+      setTimeout(function () {
+         document.getElementsByClassName("icon-button-accept")[0].click();
+      }, ((i * 7) + 3) * timeout);
+
+      // Open the new case
+      setTimeout(function () {
+         var newCase = document.getElementsByClassName("caseRow");
+         newCase = newCase[newCase.length - 1];
+         //Open edit panel
+         newCase.getElementsByTagName("a")[5].click();
+      }, ((i * 7) + 4) * timeout);
+
+      // Hit panel edit button
+      setTimeout(function () {
+         document.getElementsByClassName("button-edit")[1].click();
+      }, ((i * 7) + 5) * timeout);
+
+      // Fill test case info
+      setTimeout(function () {
+         document.getElementById("custom_test_data").value = testCase.data;
+         document.getElementById("custom_preconds").value = testCase.preconditons;
+         document.getElementById("custom_steps").value = testCase.steps;
+         document.getElementById("custom_expected").value = testCase.results;
+      }, ((i * 7) + 6) * timeout);
+
+      // Save test case
+      setTimeout(function () {
+         document.getElementById("accept").removeAttribute("disabled");
+         document.getElementById("accept").click();
+      }, ((i * 7) + 7) * timeout);
+   };
+}
+         `
       }
    },
    methods: {
@@ -191,6 +234,25 @@ var navbar = {
       onReaderLoad(event) {
          var obj = JSON.parse(event.target.result);
          this.$root.$data.cases = obj;
+      },
+      selectText(element) {
+         var range;
+         if (document.selection) {
+           // IE
+           range = document.body.createTextRange();
+           range.moveToElementText(element);
+           range.select();
+         } else if (window.getSelection) {
+           range = document.createRange();
+           range.selectNode(element);
+           window.getSelection().removeAllRanges();
+           window.getSelection().addRange(range);
+         }
+       },
+      copyToClipboard() {
+         this.selectText(this.$refs.codeText);
+         document.execCommand("copy");
+         alert("Copied to clipboard");
       }
    },
    template: `
@@ -227,16 +289,18 @@ var navbar = {
 	  </div>
 	  <div class="modal" v-bind:class="{ 'is-active' : this.active }">
 			<div class="modal-background"></div>
-			<div class="columns" style="width: 90%;">
-				<div class="column">
- 						<input class="input" v-model="url" placeholder="URL to visit">							
-				</div>
-				<div class="column is-1">
-					<a class="button is-link" @click="">Create Cases</a>
-				</div>
-			</div>
 			<div class="modal-content" style="width: 90%; height: 86%;">
-				<div v-html="webframe" style="height: 100%;">
+            <div style="height: 100%;">
+            <div class="box is-success subtitle">
+               <p class="subtitle">
+                  Copy and paste this in console to upload tests 
+                  <br>
+                  <a class="button is-small is-success" @click="copyToClipboard()">Copy to Clipboard</a>
+               </p>
+            </div>
+            <pre ref="codeText">var data = {{ this.$root.$data.cases }};
+               {{ loadFunction }}
+            </pre>
 				</div>
 			</div>
 			<button class="modal-close is-large" aria-label="close" @click="modal()"></button>
@@ -286,7 +350,7 @@ var card = {
          </button>
       </div>
 
-      <div class="modal" v-bind:class="{ 'is-active' : this.activeModal }" @keyup.enter="toggleModal()">
+      <div class="modal" v-bind:class="{ 'is-active' : this.activeModal }" @keyup.alt.71="toggleModal()">
          <div class="modal-background"></div>
          <div class="modal-content">
             <Case v-bind:id="obj.id" buttons="true" isUpdate="true"></Case>
