@@ -52,7 +52,6 @@ var cases = {
                results: this.results
             }
             this.$root.$data.cases.push(newCase);
-            this.clear();
          }
       },
       updateCase() {
