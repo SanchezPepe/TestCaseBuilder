@@ -13,7 +13,8 @@ var cases = {
    props: {
       buttons: false,
       isUpdate: false,
-      id: Number
+      titleSection: '',
+      enableComments: false
    },
    created(){
       if(this.id !== undefined){
@@ -78,9 +79,11 @@ var cases = {
    template: `
    <div class="case has-text-left" @keyup.alt.71="isUpdate ? updateCase() : submit()">
       <div class="box">
+         <label class="label">{{ titleSection }}</label>
          <div class="field bottomMargin" v-bind:class="{ 'has-addons' : this.buttons }">
             <div class="control is-expanded">
-               <input class="input is-small" placeholder="Test case title" v-model="title"></input>
+               <textarea class="textarea is-small" rows="10" placeholder="Notes and comments related" v-if="enableComments"></textarea>
+               <input class="input is-small" placeholder="Test case title" v-model="title" v-else></input>
             </div>
             <div class="control" v-if="buttons">
                <button class="button is-success is-small" v-if="isUpdate" @click="updateCase()" tabindex="-1">✔️</button>
@@ -289,11 +292,11 @@ function loadCases() {
 	  <div class="modal" v-bind:class="{ 'is-active' : this.active }">
 			<div class="modal-background"></div>
 			<div class="modal-content" style="width: 45%; height: 86%; padding: 0.5%;">
-            <div class="is-success subtitle" style="margin-bottom: 2%;">
-               <p class="subtitle box has-text-centered">
-                  Copy and paste this text in a web console to upload tests 
+            <div class="columns is-vcentered subtitle" style="margin-bottom: 2%;">
+               <p class="column box subtitle has-text-centered">
+                  Copy and paste in Web Browser Console 
                </p>
-               <a class="button is-success subtitle" @click="copyToClipboard()">
+               <a class="column box subtitle has-text-dark has-text-centered has-background-primary" @click="copyToClipboard()">
                   Copy to Clipboard
                </a>
             </div>
