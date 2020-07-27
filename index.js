@@ -14,7 +14,8 @@ var cases = {
       buttons: false,
       isUpdate: false,
       titleSection: '',
-      enableComments: false
+      enableComments: false,
+      id: Number
    },
    created(){
       if(this.id !== undefined){
