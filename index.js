@@ -196,6 +196,7 @@ function loadCases() {
          document.getElementById("accept").click();
       }, ((i * 7) + 7) * timeout);
    };
+   alert("Test cases uploaded");
 }
          `
       }
