@@ -83,7 +83,7 @@ var cases = {
          <label class="label">{{ titleSection }}</label>
          <div class="field bottomMargin" v-bind:class="{ 'has-addons' : this.buttons }">
             <div class="control is-expanded">
-               <textarea class="textarea is-small" rows="10" placeholder="Notes and comments related" v-if="enableComments"></textarea>
+               <textarea class="textarea is-small" rows="10" placeholder="Test cases to be documented" v-if="enableComments"></textarea>
                <input class="input is-small" placeholder="Test case title" v-model="title" v-else></input>
             </div>
             <div class="control" v-if="buttons">
