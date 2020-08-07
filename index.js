@@ -80,10 +80,10 @@ var cases = {
    template: `
    <div class="case has-text-left" @keyup.alt.71="isUpdate ? updateCase() : submit()">
       <div class="box">
-         <label class="label">{{ titleSection }}</label>
+         <label class="label has-text-centered">{{ titleSection }}</label>
          <div class="field bottomMargin" v-bind:class="{ 'has-addons' : this.buttons }">
             <div class="control is-expanded">
-               <textarea class="textarea is-small" rows="10" placeholder="Test cases to be documented" v-if="enableComments"></textarea>
+               <textarea class="textarea is-small" rows="5" placeholder="Test cases to be documented" v-if="enableComments"></textarea>
                <input class="input is-small" placeholder="Test case title" v-model="title" v-else></input>
             </div>
             <div class="control" v-if="buttons">
@@ -111,35 +111,35 @@ var cases = {
       <div class="field box" v-if="dataField">
          <label class="label">Data</label>
          <div class="control">
-            <textarea class="textarea is-small" rows="1" v-model='extraData' ondragstart="dragstart_handler(event);" :draggable="isDraggable"></textarea>
+            <textarea class="textarea is-small" rows="2" v-model='extraData' ondragstart="dragstart_handler(event);" :draggable="isDraggable"></textarea>
          </div>
       </div>
 
       <div class="field box">
          <label class="label">Preconditons</label>
          <div class="control">
-            <textarea class="textarea is-small" rows="3" v-model="preconditons" ondragstart="dragstart_handler(event);" :draggable="isDraggable"></textarea>
+            <textarea class="textarea is-small" rows="4" v-model="preconditons" ondragstart="dragstart_handler(event);" :draggable="isDraggable"></textarea>
          </div>
       </div>
 
       <div class="field box">
          <label class="label">Steps</label>
          <div class="control">
-            <textarea class="textarea is-small" rows="7" v-model="steps" ondragstart="dragstart_handler(event);" :draggable="isDraggable"></textarea>
+            <textarea class="textarea is-small" rows="10" v-model="steps" ondragstart="dragstart_handler(event);" :draggable="isDraggable"></textarea>
          </div>
       </div>
 
       <div class="field box">
          <label class="label">Results</label>
          <div class="control">
-            <textarea class="textarea is-small" rows="4" v-model="results" ondragstart="dragstart_handler(event);" :draggable="isDraggable"></textarea>
+            <textarea class="textarea is-small" rows="5" v-model="results" ondragstart="dragstart_handler(event);" :draggable="isDraggable"></textarea>
          </div>
       </div>
    </div>
    `
 }
 
-var navbar = {
+var optionsMenu = {
    data() {
       return {
          title: '',
@@ -196,8 +196,8 @@ function loadCases() {
          document.getElementById("accept").click();
       }, ((i * 7) + 7) * timeout);
    };
-   alert("Test cases uploaded");
 }
+alert("Test cases uploaded");
          `
       }
    },
@@ -260,55 +260,61 @@ function loadCases() {
       }
    },
    template: `
-   <div style="height: 5%; display: flex; justify-content:space-between;">
-      <div class="columns is-vcentered" style="margin: 0.5%;">
-         <label class="column is-one-third label" style="white-space: nowrap; margin: 2% 0% 2% 2%; padding-right: 0%;">Testing:</label>
-         <input class="column input is-small" v-model="title"  type="text" placeholder="Test name">
-      </div>
-	  <div class="columns is-vcentered" style="margin: 1%">
-		<div class="column">
-			<a class="button is-small is-link" @click="modal()">
-				<strong>Upload TestCases</strong>
-			</a>	
-		</div>
-        <div class="column">
-            <button class="button is-small is-link" @click="exportCases()">
-               <strong>Export JSON</strong>
-            </button>
+      <div class="box case">
+         <div style="margin-bottom: 15px;">
+            <label class="label">Testing ticket</label>
+            <input class="input" type="text" v-model="title" placeholder="Test name">
          </div>
-         <div id="file-js" class="column file is-small has-name is-right is-link">
-            <label class="file-label">
-               <input class="file-input" type="file" name="resume" @change="fileUpload">
-               <span class="file-cta">
-                  <span class="file-icon">
-                     <i class="fas fa-upload"></i>
-                  </span>
-				  <span class="file-label">
-					<strong style="color: white">Load file</strong>
-                  </span>
-               </span>
-			   <span class="file-name"> {{ fileName }} </span>
-            </label>
-         </div>
-	  </div>
-	  <div class="modal" v-bind:class="{ 'is-active' : this.active }">
-			<div class="modal-background"></div>
-			<div class="modal-content" style="width: 45%; height: 86%; padding: 0.5%;">
-            <div class="columns is-vcentered subtitle" style="margin-bottom: 2%;">
-               <p class="column box subtitle has-text-centered">
-                  Copy and paste in Web Browser Console 
-               </p>
-               <a class="column box subtitle has-text-dark has-text-centered has-background-primary" @click="copyToClipboard()">
-                  Copy to Clipboard
+
+         <div class="columns">
+            <div class="column">
+               <a class="button is-link is-fullwidth is-small" @click="modal()">
+                  <strong>Upload TestCases</strong>
                </a>
             </div>
-            <pre class="box" ref="codeText">var data = {{ this.$root.$data.cases }};
-               {{ loadFunction }}
-            </pre>
-			</div>
-			<button class="modal-close is-large" aria-label="close" @click="modal()"></button>
-		</div>
-   </div>
+            <div class="column">
+               <button class="button is-link is-fullwidth is-small" @click="exportCases()">
+                  <strong>Export JSON</strong>
+               </button>
+            </div>
+         </div>
+         <div class="columns">
+            <div class="column file has-name is-left is-link is-small is-fullwidth">
+               <label class="file-label">
+                  <input class="file-input" type="file" name="resume" @change="fileUpload">
+                  <span class="file-cta">
+                     <span class="file-icon">
+                        <i class="fas fa-upload"></i>
+                     </span>
+                     <span class="file-label">
+                        <strong style="color: white">Load File</strong>
+                     </span>
+                  </span>
+                  <span class="file-name"> {{ fileName }} </span>
+               </label>
+            </div>
+         </div>
+
+         <div class="modal" v-bind:class="{ 'is-active' : this.active }">
+            <div class="modal-background"></div>
+            <div class="modal-content" style="width: 45%; height: 86%; padding: 0.5%;">
+               <div class="columns is-vcentered subtitle" style="margin-bottom: 2%;">
+                  <p class="column box subtitle has-text-centered">
+                     Copy and paste in Web Browser Console
+                  </p>
+                  <a class="column box subtitle has-text-dark has-text-centered has-background-primary"
+                     @click="copyToClipboard()">
+                     Copy to Clipboard
+                  </a>
+               </div>
+               <pre class="box has-text-left" ref="codeText">var data = {{ this.$root.$data.cases }};
+                     {{ loadFunction }}
+                  </pre>
+            </div>
+            <button class="modal-close is-large" aria-label="close" @click="modal()"></button>
+         </div>
+
+      </div>
    `
 }
 
@@ -340,7 +346,7 @@ var card = {
    },
    template: 
    `
-   <div class="columns is-vcentered has-background-primary-dark casesTable">
+   <div class="columns is-vcentered has-background-link-dark casesTable has-text-left">
       <a class="column documentedCase subtitle is-size-6" @click="toggleModal()">
          {{ obj.title }}
       </a>
@@ -374,7 +380,7 @@ new Vue({
    },
    components: {
       'Case': cases,
-      'Navbar': navbar,
+      'Menus': optionsMenu,
       'row': card
    }
 })

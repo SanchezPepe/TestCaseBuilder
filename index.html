@@ -16,29 +16,22 @@
          margin: 0;
          height: 100%;
       }
-      
-      pre{
-         font-size: x-small;
-         font-weight: bold;
-      }
+
       .grid-container {
-         height: 95%;
+         height: 100%;
          display: grid;
          grid-template-columns: 25% 25% 25% 25%;
          grid-template-rows: repeat(1, auto);
          background-color: #00335d;
       }
 
-      h1 {
-         color: white !important;
-      }
-
       .grid-item {
          background-color: #004177;
-         border: 1px solid rgba(255, 255, 255, 1);
+         border-right: 3px solid rgba(255, 255, 255, 1);
          font-size: 20px;
          text-align: center;
          grid-row-start: span 1;
+         overflow: auto;
       }
 
       .case {
@@ -51,35 +44,19 @@
          color: white !important;
       }
 
+      .box {
+         padding: 15px;
+         margin-bottom: 0.5rem !important;
+      }
+
       .documentedCase {
          padding: 1% !important;
          margin: 0% !important;
       }
 
-      .grid-item {
-         overflow: auto;
-      }
-
-      .title {
-         margin: 2% 4% 0 4%;
-      }
-
       .casesTable {
          border: #f1f1f1 solid 1px;
-         margin: 0% 2% 0.5% 2% !important;
-      }
-
-      .sectionTitle {
-         margin: 3% !important;
-      }
-
-      .bottomMargin {
-         margin: 0% !important;
-      }
-
-      .box {
-         padding: 15px;
-         margin-bottom: 0.5rem !important;
+         margin: 0% 3% 0.5% 3% !important;
       }
 
       /** Overflow scroll bar**/
@@ -107,12 +84,12 @@
 
 <body>
    <div id="app">
-      <navbar></navbar>
       <div class="grid-container">
          <div class="grid-item">
+            <Menus></Menus>
             <div class="box case">
                <label class="label">Notes</label>
-               <textarea class="textarea is-small" rows="41" placeholder="Notes from the ticket description"></textarea>
+               <textarea class="textarea is-small" rows="32" placeholder="Notes from the ticket description"></textarea>
 
             </div>
          </div>
@@ -123,6 +100,7 @@
          <div class="grid-item">
             <Case title-section="New Case" buttons='true'></Case>
          </div>
+
 
          <div class="grid-item">
             <div class="box case">
