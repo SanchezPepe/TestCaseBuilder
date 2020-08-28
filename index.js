@@ -146,6 +146,7 @@ var optionsMenu = {
          fileName: '',
          file: '',
          active: false,
+         notes: '',
          loadFunction: 
          `
          function loadCases() {
@@ -197,7 +198,9 @@ var optionsMenu = {
                }, ((i * 7) + 7) * timeout);
             };
          }
-         alert("Test cases uploaded");
+         setTimeout(function () {
+            alert("Test cases uploaded");
+         }, ((data.length * 7) + 82) * timeout);
          `
       }
    },
@@ -209,6 +212,7 @@ var optionsMenu = {
          if (this.title === ''){
             alert("Add the test title")
          } else if (this.$root.$data.cases.length !== 0) {
+            this.$root.$data.cases.push(this.notes);
             var content = JSON.stringify(this.$root.$data.cases);
             var fileName = this.title + '_TestCases.json';
             var contentType = 'text/plain';
@@ -237,6 +241,7 @@ var optionsMenu = {
       },
       onReaderLoad(event) {
          var obj = JSON.parse(event.target.result);
+         this.notes = obj.pop(); //Get the notes of the ticket
          this.$root.$data.cases = obj;
       },
       selectText(element) {
@@ -260,16 +265,16 @@ var optionsMenu = {
       }
    },
    template: `
-      <div class="box case">
-         <div class="columns">
+      <div class="">
+         <div class="columns box case">
             <div class="column">
                <label class="label">Testing</label>
                <input class="input is-small" type="text" v-model="title" placeholder="Ticket number">
             </div>
             <div class="column" style="margin: 12px !important;">
                <div class="columns">
-                  <button class="button is-link is-small is-fullwidth" @click="modal()" style="margin-right: 5px; !important">Export</button>
-                  <button class="button is-link is-small is-fullwidth" @click="exportCases()">Get JSON</button>
+                  <button class="button is-link is-small is-fullwidth" @click="modal()" style="margin-right: 5px; !important">Upload</button>
+                  <button class="button is-link is-small is-fullwidth" @click="exportCases()">JSON</button>
                </div>
                <div class="file has-name is-left is-link is-small is-fullwidth">
                   <label class="file-label">
@@ -299,14 +304,19 @@ var optionsMenu = {
                         Copy to Clipboard
                      </a>
                   </div>
-                  <pre class="box has-text-left" ref="codeText">var data = {{ this.$root.$data.cases }};
-                        {{ loadFunction }}
-                     </pre>
+                  <pre class="box has-text-left" ref="codeText">
+                     var data = {{ this.$root.$data.cases }};
+                  </pre>
                </div>
                <button class="modal-close is-large" aria-label="close" @click="modal()"></button>
             </div>
-
          </div>
+
+         <div class="box case">
+            <label class="label">Notes</label>
+            <textarea class="textarea is-small" rows="36" placeholder="Notes from the ticket description" v-model="notes"></textarea>
+         </div>
+
       </div>
    `
 }
@@ -343,12 +353,16 @@ var card = {
       <a class="column documentedCase subtitle is-four-fifths is-size-7 has-text-black " @click="toggleModal()">
          {{ obj.title }}
       </a>
-      <div class="column documentedCase buttons has-text-centered">
-         <button @click="copy">
-            <i class="far fa-copy"></i>
+      <div class="columns is-vcentered documentedCase buttons has-text-centered">
+         <button @click="copy" class="button is-success is-small cardbutton">
+            <span class="icon is-small">
+               <i class="far fa-copy"></i>
+            </span>
          </button>
-         <button @click="remove">
-            <i class="far fa-trash-alt"></i>
+         <button @click="remove" class="button is-danger is-small cardbutton">
+            <span class="icon is-small">
+               <i class="fas fa-times"></i>
+            </span>
          </button>
       </div>
 
