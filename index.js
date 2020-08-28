@@ -83,7 +83,7 @@ var cases = {
          <label class="label has-text-centered">{{ titleSection }}</label>
          <div class="field bottomMargin" v-bind:class="{ 'has-addons' : this.buttons }">
             <div class="control is-expanded">
-               <textarea class="textarea is-small" rows="5" placeholder="Test cases to be documented" v-if="enableComments"></textarea>
+               <textarea class="textarea is-small" rows="9" placeholder="Test cases to be documented" v-if="enableComments"></textarea>
                <input class="input is-small" placeholder="Test case title" v-model="title" v-else></input>
             </div>
             <div class="control" v-if="buttons">
@@ -148,56 +148,56 @@ var optionsMenu = {
          active: false,
          loadFunction: 
          `
-function loadCases() {
-   let timeout = 1000;
-   var testCase;
-   for (let i = 0; i < data.length; i++) {
-      // Add new case button
-      setTimeout(function () {
-         testCase = data[i];
-         console.log(testCase);
-         document.getElementsByClassName("link")[2].click();
-      }, ((i * 7) + 1) * timeout);
+         function loadCases() {
+            let timeout = 1000;
+            var testCase;
+            for (let i = 0; i < data.length; i++) {
+               // Add new case button
+               setTimeout(function () {
+                  testCase = data[i];
+                  console.log(testCase);
+                  document.getElementsByClassName("link")[2].click();
+               }, ((i * 7) + 1) * timeout);
 
-      // Title input
-      setTimeout(function () {
-         document.getElementsByClassName("form-control-large")[0].value = testCase.title;
-      }, ((i * 7) + 2) * timeout);
+               // Title input
+               setTimeout(function () {
+                  document.getElementsByClassName("form-control-large")[0].value = testCase.title;
+               }, ((i * 7) + 2) * timeout);
 
-      // Submit new case
-      setTimeout(function () {
-         document.getElementsByClassName("icon-button-accept")[0].click();
-      }, ((i * 7) + 3) * timeout);
+               // Submit new case
+               setTimeout(function () {
+                  document.getElementsByClassName("icon-button-accept")[0].click();
+               }, ((i * 7) + 3) * timeout);
 
-      // Open the new case
-      setTimeout(function () {
-         var newCase = document.getElementsByClassName("caseRow");
-         newCase = newCase[newCase.length - 1];
-         //Open edit panel
-         newCase.getElementsByTagName("a")[5].click();
-      }, ((i * 7) + 4) * timeout);
+               // Open the new case
+               setTimeout(function () {
+                  var newCase = document.getElementsByClassName("caseRow");
+                  newCase = newCase[newCase.length - 1];
+                  //Open edit panel
+                  newCase.getElementsByTagName("a")[5].click();
+               }, ((i * 7) + 4) * timeout);
 
-      // Hit panel edit button
-      setTimeout(function () {
-         document.getElementsByClassName("button-edit")[1].click();
-      }, ((i * 7) + 5) * timeout);
+               // Hit panel edit button
+               setTimeout(function () {
+                  document.getElementsByClassName("button-edit")[1].click();
+               }, ((i * 7) + 5) * timeout);
 
-      // Fill test case info
-      setTimeout(function () {
-         document.getElementById("custom_test_data").value = testCase.data;
-         document.getElementById("custom_preconds").value = testCase.preconditons;
-         document.getElementById("custom_steps").value = testCase.steps;
-         document.getElementById("custom_expected").value = testCase.results;
-      }, ((i * 7) + 6) * timeout);
+               // Fill test case info
+               setTimeout(function () {
+                  document.getElementById("custom_test_data").value = testCase.data;
+                  document.getElementById("custom_preconds").value = testCase.preconditons;
+                  document.getElementById("custom_steps").value = testCase.steps;
+                  document.getElementById("custom_expected").value = testCase.results;
+               }, ((i * 7) + 6) * timeout);
 
-      // Save test case
-      setTimeout(function () {
-         document.getElementById("accept").removeAttribute("disabled");
-         document.getElementById("accept").click();
-      }, ((i * 7) + 7) * timeout);
-   };
-}
-alert("Test cases uploaded");
+               // Save test case
+               setTimeout(function () {
+                  document.getElementById("accept").removeAttribute("disabled");
+                  document.getElementById("accept").click();
+               }, ((i * 7) + 7) * timeout);
+            };
+         }
+         alert("Test cases uploaded");
          `
       }
    },
@@ -261,59 +261,52 @@ alert("Test cases uploaded");
    },
    template: `
       <div class="box case">
-         <div style="margin-bottom: 15px;">
-            <label class="label">Testing ticket</label>
-            <input class="input" type="text" v-model="title" placeholder="Test name">
-         </div>
-
          <div class="columns">
             <div class="column">
-               <a class="button is-link is-fullwidth is-small" @click="modal()">
-                  <strong>Upload TestCases</strong>
-               </a>
+               <label class="label">Testing</label>
+               <input class="input is-small" type="text" v-model="title" placeholder="Ticket number">
             </div>
-            <div class="column">
-               <button class="button is-link is-fullwidth is-small" @click="exportCases()">
-                  <strong>Export JSON</strong>
-               </button>
-            </div>
-         </div>
-         <div class="columns">
-            <div class="column file has-name is-left is-link is-small is-fullwidth">
-               <label class="file-label">
-                  <input class="file-input" type="file" name="resume" @change="fileUpload">
-                  <span class="file-cta">
-                     <span class="file-icon">
-                        <i class="fas fa-upload"></i>
-                     </span>
-                     <span class="file-label">
-                        <strong style="color: white">Load File</strong>
-                     </span>
-                  </span>
-                  <span class="file-name"> {{ fileName }} </span>
-               </label>
-            </div>
-         </div>
-
-         <div class="modal" v-bind:class="{ 'is-active' : this.active }">
-            <div class="modal-background"></div>
-            <div class="modal-content" style="width: 45%; height: 86%; padding: 0.5%;">
-               <div class="columns is-vcentered subtitle" style="margin-bottom: 2%;">
-                  <p class="column box subtitle has-text-centered">
-                     Copy and paste in Web Browser Console
-                  </p>
-                  <a class="column box subtitle has-text-dark has-text-centered has-background-primary"
-                     @click="copyToClipboard()">
-                     Copy to Clipboard
-                  </a>
+            <div class="column" style="margin: 12px !important;">
+               <div class="columns">
+                  <button class="button is-link is-small is-fullwidth" @click="modal()" style="margin-right: 5px; !important">Export</button>
+                  <button class="button is-link is-small is-fullwidth" @click="exportCases()">Get JSON</button>
                </div>
-               <pre class="box has-text-left" ref="codeText">var data = {{ this.$root.$data.cases }};
-                     {{ loadFunction }}
-                  </pre>
+               <div class="file has-name is-left is-link is-small is-fullwidth">
+                  <label class="file-label">
+                     <input class="file-input" type="file" name="resume" @change="fileUpload">
+                     <span class="file-cta">
+                        <span class="file-icon">
+                           <i class="fas fa-upload"></i>
+                        </span>
+                        <span class="file-label">
+                           <strong style="color: white">Load File</strong>
+                        </span>
+                     </span>
+                     <span class="file-name"> {{ fileName }} </span>
+                  </label>
+               </div>
             </div>
-            <button class="modal-close is-large" aria-label="close" @click="modal()"></button>
-         </div>
 
+            <div class="modal" v-bind:class="{ 'is-active' : this.active }">
+               <div class="modal-background"></div>
+               <div class="modal-content" style="width: 45%; height: 86%; padding: 0.5%;">
+                  <div class="columns is-vcentered subtitle" style="margin-bottom: 2%;">
+                     <p class="column box subtitle has-text-centered">
+                        Copy and paste in Web Browser Console
+                     </p>
+                     <a class="column box subtitle has-text-dark has-text-centered has-background-primary"
+                        @click="copyToClipboard()">
+                        Copy to Clipboard
+                     </a>
+                  </div>
+                  <pre class="box has-text-left" ref="codeText">var data = {{ this.$root.$data.cases }};
+                        {{ loadFunction }}
+                     </pre>
+               </div>
+               <button class="modal-close is-large" aria-label="close" @click="modal()"></button>
+            </div>
+
+         </div>
       </div>
    `
 }
@@ -346,11 +339,11 @@ var card = {
    },
    template: 
    `
-   <div class="columns is-vcentered has-background-link-dark casesTable has-text-left">
-      <a class="column documentedCase subtitle is-size-6" @click="toggleModal()">
+   <div class="box columns is-vcentered casesTable has-text-left" style="padding: 0% !important;">
+      <a class="column documentedCase subtitle is-four-fifths is-size-7 has-text-black " @click="toggleModal()">
          {{ obj.title }}
       </a>
-      <div class="column is-2 documentedCase buttons">
+      <div class="column documentedCase buttons has-text-centered">
          <button @click="copy">
             <i class="far fa-copy"></i>
          </button>
