@@ -84,7 +84,7 @@ var cases = {
          <div class="field bottomMargin" v-bind:class="{ 'has-addons' : this.buttons }">
             <div class="control is-expanded">
                <textarea class="textarea is-small" rows="9" placeholder="Test cases to be documented" v-if="enableComments"></textarea>
-               <input class="input is-small" placeholder="Test case title" v-model="title" v-else></input>
+                  <textarea class="textarea is-small" rows="2" placeholder="Title" v-model="title" v-else></textarea>
             </div>
             <div class="control" v-if="buttons">
                <button class="button is-success is-small" v-if="isUpdate" @click="updateCase()" tabindex="-1">✔️</button>
@@ -149,65 +149,56 @@ var optionsMenu = {
          notes: '',
          loadFunction: 
          `
-         function loadCases() {
-            let timeout = 1000;
-            var testCase;
-            for (let i = 0; i < data.length; i++) {
-               // Add new case button
-               setTimeout(function () {
-                  testCase = data[i];
-                  console.log(testCase);
-                  document.getElementsByClassName("link")[2].click();
-               }, ((i * 7) + 1) * timeout);
-
-               // Title input
-               setTimeout(function () {
-                  document.getElementsByClassName("form-control-large")[0].value = testCase.title;
-               }, ((i * 7) + 2) * timeout);
-
-               // Submit new case
-               setTimeout(function () {
-                  document.getElementsByClassName("icon-button-accept")[0].click();
-               }, ((i * 7) + 3) * timeout);
-
-               // Open the new case
-               setTimeout(function () {
-                  var newCase = document.getElementsByClassName("caseRow");
-                  newCase = newCase[newCase.length - 1];
-                  //Open edit panel
-                  newCase.getElementsByTagName("a")[5].click();
-               }, ((i * 7) + 4) * timeout);
-
-               // Hit panel edit button
-               setTimeout(function () {
-                  document.getElementsByClassName("button-edit")[1].click();
-               }, ((i * 7) + 5) * timeout);
-
-               // Fill test case info
-               setTimeout(function () {
-                  document.getElementById("custom_test_data").value = testCase.data;
-                  document.getElementById("custom_preconds").value = testCase.preconditons;
-                  document.getElementById("custom_steps").value = testCase.steps;
-                  document.getElementById("custom_expected").value = testCase.results;
-               }, ((i * 7) + 6) * timeout);
-
-               // Save test case
-               setTimeout(function () {
-                  document.getElementById("accept").removeAttribute("disabled");
-                  document.getElementById("accept").click();
-               }, ((i * 7) + 7) * timeout);
-            };
-         }
-         setTimeout(function () {
-            alert("Test cases uploaded");
-         }, ((data.length * 7) + 82) * timeout);
+function loadCases() {
+   let timeout = 1000;
+   var testCase;
+   for (let i = 0; i < data.length; i++) {
+      // Add new case button
+      setTimeout(function () {
+         testCase = data[i];
+         console.log(testCase);
+         document.getElementsByClassName("link")[2].click();
+      }, ((i * 7) + 1) * timeout);
+      // Title input
+      setTimeout(function () {
+         document.getElementsByClassName("form-control-large")[0].value = testCase.title;
+      }, ((i * 7) + 2) * timeout);
+      // Submit new case
+      setTimeout(function () {
+         document.getElementsByClassName("icon-button-accept")[0].click();
+      }, ((i * 7) + 3) * timeout);
+      // Open the new case
+      setTimeout(function () {
+         var newCase = document.getElementsByClassName("caseRow");
+         newCase = newCase[newCase.length - 1];
+         //Open edit panel
+         newCase.getElementsByTagName("a")[5].click();
+      }, ((i * 7) + 4) * timeout);
+      // Hit panel edit button
+      setTimeout(function () {
+         document.getElementsByClassName("button-edit")[1].click();
+      }, ((i * 7) + 5) * timeout);
+      // Fill test case info
+      setTimeout(function () {
+         document.getElementById("custom_test_data").value = testCase.data;
+         document.getElementById("custom_preconds").value = testCase.preconditons;
+         document.getElementById("custom_steps").value = testCase.steps;
+         document.getElementById("custom_expected").value = testCase.results;
+      }, ((i * 7) + 6) * timeout);
+      // Save test case
+      setTimeout(function () {
+         document.getElementById("accept").removeAttribute("disabled");
+         document.getElementById("accept").click();
+      }, ((i * 7) + 7) * timeout);
+   };
+   setTimeout(function () {
+      alert("Test cases uploaded");
+   }, ((data.length * 8) + 8) * timeout);
+}
          `
       }
    },
    methods: {
-      modal() {
-         this.active = !this.active;
-      },
       exportCases() {
          if (this.title === ''){
             alert("Add the test title")
@@ -257,11 +248,17 @@ var optionsMenu = {
            window.getSelection().removeAllRanges();
            window.getSelection().addRange(range);
          }
-       },
+      },
+      toggleCode(){
+         this.active = !this.active;
+      },
       copyToClipboard() {
-         this.selectText(this.$refs.codeText);
-         document.execCommand("copy");
-         alert("Copied to clipboard");
+        this.toggleCode();
+
+        this.selectText(this.$refs.codeText);
+        document.execCommand("copy");
+        
+        alert("Copied to clipboard");
       }
    },
    template: `
@@ -273,7 +270,7 @@ var optionsMenu = {
             </div>
             <div class="column" style="margin: 12px !important;">
                <div class="columns">
-                  <button class="button is-link is-small is-fullwidth" @click="modal()" style="margin-right: 5px; !important">Upload</button>
+                  <button class="button is-link is-small is-fullwidth" @click="copyToClipboard()" style="margin-right: 5px; !important">Copy & Upload</button>
                   <button class="button is-link is-small is-fullwidth" @click="exportCases()">JSON</button>
                </div>
                <div class="file has-name is-left is-link is-small is-fullwidth">
@@ -291,26 +288,9 @@ var optionsMenu = {
                   </label>
                </div>
             </div>
-
-            <div class="modal" v-bind:class="{ 'is-active' : this.active }">
-               <div class="modal-background"></div>
-               <div class="modal-content" style="width: 45%; height: 86%; padding: 0.5%;">
-                  <div class="columns is-vcentered subtitle" style="margin-bottom: 2%;">
-                     <p class="column box subtitle has-text-centered">
-                        Copy and paste in Web Browser Console
-                     </p>
-                     <a class="column box subtitle has-text-dark has-text-centered has-background-primary"
-                        @click="copyToClipboard()">
-                        Copy to Clipboard
-                     </a>
-                  </div>
-                  <pre class="box has-text-left" ref="codeText">
-                     var data = {{ this.$root.$data.cases }};
-                  </pre>
-               </div>
-               <button class="modal-close is-large" aria-label="close" @click="modal()"></button>
-            </div>
          </div>
+
+         <pre v-if="this.active" ref="codeText" class="box case has-text-left is-size-7">var data = {{ this.$root.$data.cases }}; \n {{ loadFunction }} </pre>
 
          <div class="box case">
             <label class="label">Notes</label>
