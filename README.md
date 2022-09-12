@@ -2,7 +2,9 @@
 
 When I worked as a QA Tester I missed coding, so I developed a web app with Vue.js 2 to design, create and automate my documentation tasks.
 
-This saved more than half of the time I spent docummenting each new feature of the system.
+This saved more than half of the time I spent documenting each new feature of the system.
+
+Live [demo](https://sanchezpepe.github.io/TestCaseBuilder/) hosted with Github pages
 
 That's all.
 
