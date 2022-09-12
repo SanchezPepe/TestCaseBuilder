@@ -1,6 +1,6 @@
 # Test Case Builder
 
-When I worked as a QA Tester I missed coding, so I developed a web app with Vue.js 2 to design, create and automate my documentation taks test cases in a single GUI
+When I worked as a QA Tester I missed coding, so I developed a web app with Vue.js 2 to design, create and automate my documentation tasks.
 
 This saved more than half of the time I spent docummenting each new feature of the system.
 
